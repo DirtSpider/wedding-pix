@@ -139,6 +139,11 @@ app.delete("/api/media/:id", async (req, res) => {
   res.json({ success: true });
 });
 
+// Catch-all: serve index.html for any non-API route (SPA fallback)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(STATIC_DIR, 'index.html'));
+});
+
 app.listen(PORT, () => {
   console.log(`Wedding Pix running on port ${PORT}`);
   console.log(`  Frontend: http://localhost:${PORT}`);

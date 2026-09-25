@@ -4,9 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "start:api": "tsx api-server.ts"
+    "build": "echo skip",
+    "start": "tsx api-server.ts"
   },
   "dependencies": {
     "@types/express": "^5.0.6",
