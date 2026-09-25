@@ -608,7 +608,7 @@
             
             var downloadBtn = galleryState.selectMode ? '' : '<button class="absolute top-3 right-3 z-20 w-9 h-9 rounded-full bg-black/50 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:bg-black/70" onclick="event.stopPropagation();downloadSingle(\'' + item.id + '\')" title="Download">' + DOWNLOAD_SVG + '</button>';
             
-            var deleteBtn = galleryState.selectMode ? '' : '<button class="absolute top-3 right-14 z-20 w-9 h-9 rounded-full bg-red-500/80 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:bg-red-600" onclick="event.stopPropagation();deleteSingle(\'' + item.id + '\')" title="Delete">' + TRASH_SVG + '</button>';
+            var deleteBtn = galleryState.selectMode ? '' : '<button class="absolute bottom-3 left-3 z-20 w-9 h-9 rounded-full bg-red-500/80 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:bg-red-600" onclick="event.stopPropagation();deleteSingle(\'' + item.id + '\')" title="Delete">' + TRASH_SVG + '</button>';
             
             var clickHandler = galleryState.selectMode 
               ? 'onclick="toggleSelect(\'' + item.id + '\')"'
@@ -703,7 +703,7 @@
         
         var downloadBtn = galleryState.selectMode ? '' : '<button class="absolute top-3 right-3 z-20 w-9 h-9 rounded-full bg-black/50 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:bg-black/70" onclick="event.stopPropagation();downloadSingle(\'' + item.id + '\')" title="Download">' + DOWNLOAD_SVG + '</button>';
         
-        var deleteBtn = galleryState.selectMode ? '' : '<button class="absolute top-3 right-14 z-20 w-9 h-9 rounded-full bg-red-500/80 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:bg-red-600" onclick="event.stopPropagation();deleteSingle(\'' + item.id + '\')" title="Delete">' + TRASH_SVG + '</button>';
+        var deleteBtn = galleryState.selectMode ? '' : '<button class="absolute bottom-3 left-3 z-20 w-9 h-9 rounded-full bg-red-500/80 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:bg-red-600" onclick="event.stopPropagation();deleteSingle(\'' + item.id + '\')" title="Delete">' + TRASH_SVG + '</button>';
         
         var clickHandler = galleryState.selectMode 
           ? 'onclick="toggleSelect(\'' + item.id + '\')"'
@@ -938,7 +938,7 @@
       if (ext && !filename.includes('.')) filename = filename + '.' + ext;
       
       var mediaEl = isVideo(item.mimeType)
-        ? '<video src="' + src + '" controls autoplay playsinline muted class="max-w-full max-h-[80vh] object-contain rounded-lg"></video>'
+        ? '<video src="' + src + '" controls autoplay playsinline muted preload="auto" class="max-w-full max-h-[80vh] object-contain rounded-lg"></video>'
         : '<img src="' + src + '" alt="' + (item.caption || 'Wedding photo') + '" class="max-w-full max-h-[80vh] object-contain rounded-lg" />';
       
       var overlay = document.createElement('div');
@@ -958,6 +958,15 @@
         '</div>' +
         '</div>';
       document.body.appendChild(overlay);
+      
+      // iOS Safari requires muted to be set via JS, and play() must be called explicitly
+      var lightboxVideo = overlay.querySelector('video');
+      if (lightboxVideo) {
+        lightboxVideo.muted = true;
+        lightboxVideo.play().catch(function() {
+          // Autoplay blocked — user can press play manually since controls are visible
+        });
+      }
       
       // Esc key to close
       document.addEventListener('keydown', function escClose(e) {
