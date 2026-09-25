@@ -7,8 +7,9 @@ import crypto from "crypto";
 const app = express();
 const PORT = parseInt(process.env.PORT || "3000");
 
-const UPLOAD_DIR = path.join(process.cwd(), "public", "uploads");
-const DATA_FILE = path.join(process.cwd(), "data", "uploads.json");
+const STORAGE_DIR = process.env.STORAGE_DIR || path.join(process.cwd(), "storage");
+const UPLOAD_DIR = path.join(STORAGE_DIR, "uploads");
+const DATA_FILE = path.join(STORAGE_DIR, "data", "uploads.json");
 
 type MediaRecord = {
   id: string;
@@ -22,7 +23,7 @@ type MediaRecord = {
 };
 
 async function ensureDirs() {
-  await fs.mkdir(path.dirname(DATA_FILE), { recursive: true });
+  await fs.mkdir(path.join(STORAGE_DIR, "data"), { recursive: true });
   await fs.mkdir(UPLOAD_DIR, { recursive: true });
 }
 
@@ -50,9 +51,10 @@ async function writeDb(records: MediaRecord[]) {
 const upload = multer({
   storage: multer.diskStorage({
     destination: UPLOAD_DIR,
-    filename: (_req, _file, cb) => {
+    filename: (_req, file, cb) => {
       const id = crypto.randomUUID();
-      cb(null, id);
+      const ext = path.extname(file.originalname) || '';
+      cb(null, id + ext);
     },
   }),
   limits: { fileSize: 100 * 1024 * 1024 }, // 100MB
@@ -68,7 +70,21 @@ app.use((req, res, next) => {
   next();
 });
 
-// Serve uploaded files
+// Serve uploaded files with correct Content-Type
+app.use("/uploads", async (req, res, next) => {
+  const filename = path.basename(req.path);
+  if (filename && !path.extname(filename)) {
+    // No extension — look up mimeType from database
+    try {
+      const records = await readDb();
+      const record = records.find(r => r.filename === filename);
+      if (record && record.mimeType) {
+        res.setHeader('Content-Type', record.mimeType);
+      }
+    } catch {}
+  }
+  next();
+});
 app.use("/uploads", express.static(UPLOAD_DIR));
 
 // Serve static frontend (vanilla JS version)
