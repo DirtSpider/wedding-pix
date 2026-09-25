@@ -5,7 +5,7 @@ import path from "path";
 import crypto from "crypto";
 
 const app = express();
-const PORT = 3000;
+const PORT = parseInt(process.env.PORT || "3000");
 
 const UPLOAD_DIR = path.join(process.cwd(), "public", "uploads");
 const DATA_FILE = path.join(process.cwd(), "data", "uploads.json");
