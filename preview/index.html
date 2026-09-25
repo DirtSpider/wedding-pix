@@ -405,9 +405,9 @@
                 </div>\
                 <p class="text-sm text-stone-400">JPG, PNG, WebP, HEIC, MP4, MOV — up to 100MB each</p>\
               </div>\
-              <input type="file" id="fileInput" multiple accept="image/*,video/*" style="display:none" />\
-              <input type="file" id="fileInputPhoto" accept="image/*" capture="environment" style="display:none" />\
-              <input type="file" id="fileInputVideo" accept="video/*" capture="environment" style="display:none" />\
+              <input type="file" id="fileInput" multiple accept="image/*,video/*" style="position:absolute;opacity:0;width:0;height:0;pointer-events:none;" />\
+              <input type="file" id="fileInputPhoto" accept="image/*" capture="environment" style="position:absolute;opacity:0;width:0;height:0;pointer-events:none;" />\
+              <input type="file" id="fileInputVideo" accept="video/*" capture="environment" style="position:absolute;opacity:0;width:0;height:0;pointer-events:none;" />\
             </div>\
             <div id="uploadStatus"></div>\
             <p class="text-center text-xs text-stone-400 mt-6">Tip: If upload fails, text your photos to Jessalynn or Dylan directly</p>\
@@ -600,7 +600,7 @@
             var src = API_BASE + '/uploads/' + item.filename;
             var mediaEl = isVideo(item.mimeType) 
               ? '<div class="relative w-full" style="aspect-ratio:1;"><video src="' + src + '" class="absolute inset-0 w-full h-full object-cover" muted playsinline></video><div class="absolute inset-0 flex items-center justify-center bg-black/30"><svg width="40" height="40" viewBox="0 0 24 24" fill="white" opacity="0.9"><circle cx="12" cy="12" r="11" fill="black" fill-opacity="0.4"/><polygon points="9 8 17 12 9 16 9 8"/></svg></div></div>'
-              : '<img src="' + src + '" alt="' + (item.caption || item.guestName || 'Wedding photo') + '" class="w-full h-auto object-cover" loading="lazy" />';
+              : '<img src="' + src + '" alt="' + (item.caption || item.guestName || 'Wedding photo') + '" class="w-full h-auto object-cover" loading="lazy" decoding="async" />';
             
             var selectCheckbox = galleryState.selectMode
               ? '<div class="absolute top-3 left-3 z-20 w-8 h-8 rounded-full border-2 ' + (galleryState.selected[item.id] ? 'bg-rose-500 border-rose-500 text-white' : 'bg-white/80 border-white text-transparent') + ' flex items-center justify-center cursor-pointer transition-all" onclick="event.stopPropagation();toggleSelect(\'' + item.id + '\')">' + (galleryState.selected[item.id] ? CHECK_SVG : '') + '</div>'
@@ -673,7 +673,7 @@
         }
       }
       
-      refreshGallery();
+      renderGalleryItems();
     }
 
     function toggleSelect(id) {
@@ -695,7 +695,7 @@
         var src = API_BASE + '/uploads/' + item.filename;
         var mediaEl = isVideo(item.mimeType) 
           ? '<div class="relative w-full" style="aspect-ratio:1;"><video src="' + src + '" class="absolute inset-0 w-full h-full object-cover" muted playsinline></video><div class="absolute inset-0 flex items-center justify-center bg-black/30"><svg width="40" height="40" viewBox="0 0 24 24" fill="white" opacity="0.9"><circle cx="12" cy="12" r="11" fill="black" fill-opacity="0.4"/><polygon points="9 8 17 12 9 16 9 8"/></svg></div></div>'
-          : '<img src="' + src + '" alt="' + (item.caption || item.guestName || 'Wedding photo') + '" class="w-full h-auto object-cover" loading="lazy" />';
+          : '<img src="' + src + '" alt="' + (item.caption || item.guestName || 'Wedding photo') + '" class="w-full h-auto object-cover" loading="lazy" decoding="async" />';
         
         var selectCheckbox = galleryState.selectMode
           ? '<div class="absolute top-3 left-3 z-20 w-8 h-8 rounded-full border-2 ' + (galleryState.selected[item.id] ? 'bg-rose-500 border-rose-500 text-white' : 'bg-white/80 border-white text-transparent') + ' flex items-center justify-center cursor-pointer transition-all" onclick="event.stopPropagation();toggleSelect(\'' + item.id + '\')">' + (galleryState.selected[item.id] ? CHECK_SVG : '') + '</div>'
@@ -1157,7 +1157,7 @@
             var src = API_BASE + '/uploads/' + item.filename;
             var mediaEl = isVideo(item.mimeType)
               ? '<div class="relative w-full" style="aspect-ratio:1;"><video src="' + src + '" class="absolute inset-0 w-full h-full object-cover" muted playsinline></video><div class="absolute inset-0 flex items-center justify-center bg-black/30"><svg width="32" height="32" viewBox="0 0 24 24" fill="white" opacity="0.9"><circle cx="12" cy="12" r="11" fill="black" fill-opacity="0.4"/><polygon points="9 8 17 12 9 16 9 8"/></svg></div></div>'
-              : '<img src="' + src + '" alt="' + (item.caption || 'Photo') + '" class="w-full aspect-square object-cover" loading="lazy" />';
+              : '<img src="' + src + '" alt="' + (item.caption || 'Photo') + '" class="w-full aspect-square object-cover" loading="lazy" decoding="async" />';
             
             html += '<div class="relative group rounded-xl overflow-hidden shadow-sm border-2 ' + (item.approved ? 'border-transparent' : 'border-amber-400') + '">\
               ' + mediaEl + '\
