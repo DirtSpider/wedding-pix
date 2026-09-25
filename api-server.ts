@@ -35,9 +35,16 @@ async function readDb(): Promise<MediaRecord[]> {
   }
 }
 
+let writeLock: Promise<void> = Promise.resolve();
+
 async function writeDb(records: MediaRecord[]) {
-  await ensureDirs();
-  await fs.writeFile(DATA_FILE, JSON.stringify(records, null, 2));
+  writeLock = writeLock.then(async () => {
+    await ensureDirs();
+    const tmp = DATA_FILE + '.tmp';
+    await fs.writeFile(tmp, JSON.stringify(records, null, 2));
+    await fs.rename(tmp, DATA_FILE);
+  }).catch(() => {});
+  await writeLock;
 }
 
 const upload = multer({
@@ -52,6 +59,7 @@ const upload = multer({
 });
 
 // CORS headers
+app.use(express.json());
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS");
@@ -101,6 +109,17 @@ app.get("/api/upload", async (req, res) => {
   const filtered = admin ? records : records.filter((r) => r.approved);
   const sorted = filtered.sort((a, b) => b.uploadedAt.localeCompare(a.uploadedAt));
   res.json({ media: sorted });
+});
+
+// Auth check
+app.post("/api/auth", (req, res) => {
+  const { password } = req.body || {};
+  const adminPassword = process.env.ADMIN_PASSWORD || "admin";
+  if (password === adminPassword) {
+    res.json({ success: true, token: adminPassword });
+  } else {
+    res.status(401).json({ error: "Unauthorized" });
+  }
 });
 
 // Toggle approval
