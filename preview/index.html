@@ -256,6 +256,7 @@
     // Shared back button SVG icons
     var BACK_ARROW_SVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>';
     var DOWNLOAD_SVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>';
+    var TRASH_SVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>';
     var CHECK_SVG = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>';
 
     // ===== Router =====
@@ -323,7 +324,7 @@
                 <button onclick="generateQR()" class="px-6 py-3 bg-rose-500 text-white rounded-full font-medium hover:bg-rose-600 transition-all">Show QR Code</button>\
               </div>\
             </div>\
-            <p class="text-xs text-stone-400 mt-12">Made with love for our wedding day</p>\
+            <p class="text-xs text-stone-400 mt-12">Made with love for our wedding day by Lampredi</p>\
             <p class="text-xs text-stone-400 mt-2">Cheers to Forever</p>\
           </div>\
           </div>\
@@ -513,6 +514,10 @@
                   ' + DOWNLOAD_SVG + '\
                   <span id="download-selected-text">Download Selected</span>\
                 </button>\
+                <button id="delete-selected-btn" onclick="deleteSelected()" class="hidden inline-flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-full text-sm font-medium hover:bg-red-600 transition-all">\
+                  ' + TRASH_SVG + '\
+                  <span id="delete-selected-text">Delete Selected</span>\
+                </button>\
                 <button onclick="refreshGallery()" class="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-stone-200 text-sm text-stone-600 hover:text-stone-800 hover:border-stone-300 transition-all">\
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>\
                   Refresh\
@@ -559,7 +564,7 @@
           media.forEach(function(item) {
             var src = API_BASE + '/uploads/' + item.filename;
             var mediaEl = isVideo(item.mimeType) 
-              ? '<video src="' + src + '" class="w-full h-auto object-cover" muted playsinline></video>'
+              ? '<video src="' + src + '" class="w-full h-auto object-cover" muted playsinline preload="metadata"></video>'
               : '<img src="' + src + '" alt="' + (item.caption || item.guestName || 'Wedding photo') + '" class="w-full h-auto object-cover" loading="lazy" />';
             
             var selectCheckbox = galleryState.selectMode
@@ -568,6 +573,8 @@
             
             var downloadBtn = galleryState.selectMode ? '' : '<button class="absolute top-3 right-3 z-20 w-9 h-9 rounded-full bg-black/50 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:bg-black/70" onclick="event.stopPropagation();downloadSingle(\'' + item.id + '\')" title="Download">' + DOWNLOAD_SVG + '</button>';
             
+            var deleteBtn = galleryState.selectMode ? '' : '<button class="absolute top-3 right-14 z-20 w-9 h-9 rounded-full bg-red-500/80 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:bg-red-600" onclick="event.stopPropagation();deleteSingle(\'' + item.id + '\')" title="Delete">' + TRASH_SVG + '</button>';
+            
             var clickHandler = galleryState.selectMode 
               ? 'onclick="toggleSelect(\'' + item.id + '\')"'
               : 'onclick="openLightbox(\'' + item.id + '\')"';
@@ -575,6 +582,7 @@
             html += '<div class="break-inside-avoid cursor-pointer group relative overflow-hidden rounded-xl shadow-sm hover:shadow-md transition-all" ' + clickHandler + '>' +
               mediaEl +
               selectCheckbox +
+              deleteBtn +
               downloadBtn +
               '<div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-all flex items-end p-3 pointer-events-none">' +
               (item.caption ? '<p class="text-white text-sm font-medium">' + item.caption + '</p>' : '') +
@@ -621,6 +629,15 @@
         }
       }
       
+      var deleteBtn = document.getElementById('delete-selected-btn');
+      if (deleteBtn) {
+        if (galleryState.selectMode) {
+          deleteBtn.classList.remove('hidden');
+        } else {
+          deleteBtn.classList.add('hidden');
+        }
+      }
+      
       refreshGallery();
     }
 
@@ -648,6 +665,16 @@
           btn.classList.remove('opacity-60', 'pointer-events-none');
         } else {
           btn.classList.add('opacity-60', 'pointer-events-none');
+        }
+      }
+      var delBtn = document.getElementById('delete-selected-btn');
+      var delText = document.getElementById('delete-selected-text');
+      if (delBtn && delText) {
+        delText.textContent = count > 0 ? 'Delete Selected (' + count + ')' : 'Delete Selected';
+        if (count > 0) {
+          delBtn.classList.remove('opacity-60', 'pointer-events-none');
+        } else {
+          delBtn.classList.add('opacity-60', 'pointer-events-none');
         }
       }
     }
@@ -756,6 +783,71 @@
       }
     }
 
+    async function deleteSingle(id) {
+      if (!confirm('Delete this photo/video? This cannot be undone.')) return;
+      try {
+        var res = await fetch(API_BASE + '/api/media/' + id, { method: 'DELETE' });
+        if (res.ok) {
+          refreshGallery();
+        } else {
+          alert('Could not delete. Please try again.');
+        }
+      } catch(e) {
+        alert('Could not delete. Please try again.');
+      }
+    }
+
+    async function deleteSelected() {
+      var ids = Object.keys(galleryState.selected);
+      if (ids.length === 0) return;
+      if (!confirm('Delete ' + ids.length + ' selected photo(s)/video(s)? This cannot be undone.')) return;
+      
+      var btn = document.getElementById('delete-selected-btn');
+      var originalHTML = btn ? btn.innerHTML : '';
+      if (btn) {
+        btn.innerHTML = '<div class="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin"></div> <span>Deleting...</span>';
+        btn.style.pointerEvents = 'none';
+      }
+      
+      var failed = 0;
+      for (var i = 0; i < ids.length; i++) {
+        try {
+          var res = await fetch(API_BASE + '/api/media/' + ids[i], { method: 'DELETE' });
+          if (!res.ok) failed++;
+        } catch(e) {
+          failed++;
+        }
+        if (btn) {
+          btn.innerHTML = '<div class="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin"></div> <span>Deleting ' + (i + 1) + '/' + ids.length + '...</span>';
+        }
+      }
+      
+      galleryState.selected = {};
+      galleryState.selectMode = false;
+      
+      if (btn) {
+        btn.innerHTML = originalHTML;
+        btn.style.pointerEvents = 'auto';
+      }
+      
+      // Hide select mode buttons
+      var dlBtn = document.getElementById('download-selected-btn');
+      if (dlBtn) dlBtn.classList.add('hidden');
+      if (btn) btn.classList.add('hidden');
+      var selBtn = document.getElementById('select-toggle');
+      if (selBtn) {
+        selBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg> <span>Select Photos</span>';
+        selBtn.classList.remove('bg-stone-800', 'text-white', 'border-stone-800');
+        selBtn.classList.add('bg-white', 'text-stone-600', 'border-stone-200');
+      }
+      
+      if (failed > 0) {
+        alert(failed + ' item(s) could not be deleted. Please try again.');
+      }
+      
+      refreshGallery();
+    }
+
     function loadScript(src) {
       return new Promise(function(resolve, reject) {
         var s = document.createElement('script');
@@ -777,7 +869,7 @@
       if (ext && !filename.includes('.')) filename = filename + '.' + ext;
       
       var mediaEl = isVideo(item.mimeType)
-        ? '<video src="' + src + '" controls autoplay class="max-w-full max-h-[80vh] object-contain rounded-lg"></video>'
+        ? '<video src="' + src + '" controls autoplay playsinline preload="metadata" class="max-w-full max-h-[80vh] object-contain rounded-lg"></video>'
         : '<img src="' + src + '" alt="' + (item.caption || 'Wedding photo') + '" class="max-w-full max-h-[80vh] object-contain rounded-lg" />';
       
       var overlay = document.createElement('div');
@@ -790,8 +882,9 @@
         mediaEl +
         (item.caption ? '<p class="text-white text-center mt-4 font-serif text-lg">' + item.caption + '</p>' : '') +
         (item.guestName ? '<p class="text-white/50 text-sm mt-1">— ' + item.guestName + '</p>' : '') +
-        '<div class="flex items-center gap-3 mt-6">' +
+        '<div class="flex items-center gap-3 mt-4 mb-6">' +
           '<button class="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 rounded-full border border-white/20 text-sm text-white transition-all" onclick="downloadSingle(\'' + item.id + '\')">' + DOWNLOAD_SVG + ' Download</button>' +
+          '<button class="inline-flex items-center gap-2 px-5 py-2.5 bg-red-500/30 hover:bg-red-500/50 rounded-full border border-red-500/30 text-sm text-white transition-all" onclick="closeLightbox();deleteSingle(\'' + item.id + '\')">' + TRASH_SVG + ' Delete</button>' +
           '<button class="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 rounded-full border border-white/20 text-sm text-white transition-all" onclick="closeLightbox()">✕ Close</button>' +
         '</div>' +
         '</div>';
@@ -980,7 +1073,7 @@
           adminState.media.forEach(function(item) {
             var src = API_BASE + '/uploads/' + item.filename;
             var mediaEl = isVideo(item.mimeType)
-              ? '<video src="' + src + '" class="w-full aspect-square object-cover" muted playsinline></video>'
+              ? '<video src="' + src + '" class="w-full aspect-square object-cover" muted playsinline preload="metadata"></video>'
               : '<img src="' + src + '" alt="' + (item.caption || 'Photo') + '" class="w-full aspect-square object-cover" loading="lazy" />';
             
             html += '<div class="relative group rounded-xl overflow-hidden shadow-sm border-2 ' + (item.approved ? 'border-transparent' : 'border-amber-400') + '">\

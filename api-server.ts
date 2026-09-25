@@ -120,11 +120,6 @@ app.patch("/api/media/:id", async (req, res) => {
 
 // Delete media
 app.delete("/api/media/:id", async (req, res) => {
-  const authHeader = req.headers.authorization;
-  const adminPassword = process.env.ADMIN_PASSWORD || "admin";
-  if (authHeader !== `Bearer ${adminPassword}`) {
-    return res.status(401).json({ error: "Unauthorized" });
-  }
   const records = await readDb();
   const idx = records.findIndex((r) => r.id === req.params.id);
   if (idx === -1) return res.status(404).json({ error: "Not found" });
