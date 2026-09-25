@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>Jessalynn & Dylan — Wedding Photo Gallery</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+    .font-serif { font-family: Georgia, 'Times New Roman', serif; }
+    .min-h-screen { min-height: 100vh; }
+    .text-center { text-align: center; }
+    .mx-auto { margin-left: auto; margin-right: auto; }
+    .mb-2 { margin-bottom: 0.5rem; }
+    .mb-3 { margin-bottom: 0.75rem; }
+    .mb-4 { margin-bottom: 1rem; }
+    .mb-6 { margin-bottom: 1.5rem; }
+    .mb-8 { margin-bottom: 2rem; }
+    .mb-12 { margin-bottom: 3rem; }
+    .mt-1 { margin-top: 0.25rem; }
+    .mt-2 { margin-top: 0.5rem; }
+    .mt-4 { margin-top: 1rem; }
+    .mt-6 { margin-top: 1.5rem; }
+    .mt-12 { margin-top: 3rem; }
+    .p-4 { padding: 1rem; }
+    .p-6 { padding: 1.5rem; }
+    .p-8 { padding: 2rem; }
+    .p-12 { padding: 3rem; }
+    .pt-4 { padding-top: 1rem; }
+    .pt-8 { padding-top: 2rem; }
+    .gap-3 { gap: 0.75rem; }
+    .gap-4 { gap: 1rem; }
+    .w-full { width: 100%; }
+    .max-w-2xl { max-width: 42rem; }
+    .max-w-6xl { max-width: 72rem; }
+    .rounded-2xl { border-radius: 1rem; }
+    .rounded-xl { border-radius: 0.75rem; }
+    .rounded-lg { border-radius: 0.5rem; }
+    .rounded-full { border-radius: 9999px; }
+    .shadow-sm { box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+    .border { border-width: 1px; }
+    .border-2 { border-width: 2px; }
+    .border-dashed { border-style: dashed; }
+    .flex { display: flex; }
+    .inline-flex { display: inline-flex; }
+    .items-center { align-items: center; }
+    .justify-center { justify-content: center; }
+    .justify-between { justify-content: space-between; }
+    .flex-col { flex-direction: column; }
+    .grid { display: grid; }
+    .text-sm { font-size: 0.875rem; }
+    .text-xs { font-size: 0.75rem; }
+    .text-lg { font-size: 1.125rem; }
+    .text-xl { font-size: 1.25rem; }
+    .text-2xl { font-size: 1.5rem; }
+    .text-3xl { font-size: 1.875rem; }
+    .text-4xl { font-size: 2.25rem; }
+    .text-5xl { font-size: 3rem; }
+    .uppercase { text-transform: uppercase; }
+    .tracking-wide { letter-spacing: 0.1em; }
+    .font-medium { font-weight: 500; }
+    .hidden { display: none; }
+    .cursor-pointer { cursor: pointer; }
+    .transition-all { transition: all 0.2s; }
+    .object-cover { object-fit: cover; }
+    .object-contain { object-fit: contain; }
+    .text-white { color: #fff; }
+    .text-stone-300 { color: #d6d3d1; }
+    .text-stone-400 { color: #a8a29e; }
+    .text-stone-500 { color: #78716c; }
+    .text-stone-600 { color: #57534e; }
+    .text-stone-700 { color: #44403c; }
+    .text-stone-800 { color: #292524; }
+    .text-rose-400 { color: #8B4A52; }
+    .text-rose-500 { color: #722F37; }
+    .text-green-500 { color: #22c55e; }
+    .text-red-500 { color: #ef4444; }
+    .text-red-700 { color: #b91c1c; }
+    .text-amber-500 { color: #5C6B3D; }
+    .text-amber-600 { color: #4A5730; }
+    .text-violet-500 { color: #5C6B3D; }
+    .bg-white { background: #fff; }
+    .bg-rose-50 { background: #F5EBED; }
+    .bg-rose-100 { background: #EBD5D8; }
+    .bg-amber-50 { background: #F0F2E8; }
+    .bg-amber-100 { background: #E2E5D4; }
+    .bg-violet-50 { background: #F0F2E8; }
+    .bg-violet-100 { background: #E2E5D4; }
+    .bg-green-50 { background: #f0fdf4; }
+    .bg-red-50 { background: #fef2f2; }
+    .bg-rose-500 { background: #722F37; }
+    .bg-rose-600 { background: #5A2530; }
+    .bg-stone-50 { background: #fafaf9; }
+    .bg-stone-100 { background: #f5f5f4; }
+    .bg-stone-700 { background: #44403c; }
+    .bg-stone-800 { background: #292524; }
+    .bg-stone-900 { background: #1c1917; }
+    .bg-black { background: #000; }
+    .bg-gradient-to-br { background: linear-gradient(135deg, var(--from), var(--via), var(--to)); }
+    .from-rose-50 { --from: #F5EBED; }
+    .via-white { --via: #fff; }
+    .to-amber-50 { --to: #F0F2E8; }
+    .from-amber-50 { --from: #F0F2E8; }
+    .to-rose-50 { --to: #F5EBED; }
+    .border-stone-100 { border-color: #f5f5f4; }
+    .border-stone-200 { border-color: #e7e5e4; }
+    .border-stone-300 { border-color: #d6d3d1; }
+    .border-rose-200 { border-color: #EBD5D8; }
+    .border-rose-300 { border-color: #D4A0A8; }
+    .border-rose-400 { border-color: #8B4A52; }
+    .border-amber-400 { border-color: #B8C09A; }
+    .border-red-100 { border-color: #fee2e2; }
+    .border-transparent { border-color: transparent; }
+    .hover\:shadow-md:hover { box-shadow: 0 4px 6px rgba(0,0,0,0.07); }
+    .hover\:border-rose-200:hover { border-color: #EBD5D8; }
+    .hover\:border-rose-300:hover { border-color: #D4A0A8; }
+    .hover\:bg-rose-100:hover { background: #EBD5D8; }
+    .hover\:bg-amber-100:hover { background: #E2E5D4; }
+    .hover\:bg-violet-100:hover { background: #E2E5D4; }
+    .hover\:bg-rose-600:hover { background: #5A2530; }
+    .hover\:bg-red-600:hover { background: #dc2626; }
+    .hover\:bg-green-600:hover { background: #16a34a; }
+    .hover\:text-rose-600:hover { color: #5A2530; }
+    .hover\:text-stone-600:hover { color: #57534e; }
+    .hover\:text-stone-700:hover { color: #44403c; }
+    .hover\:text-stone-800:hover { color: #292524; }
+    .hover\:bg-stone-100:hover { background: #f5f5f4; }
+    .hover\:scale:hover { transform: scale(1.02); }
+    .columns-2 { columns: 2; }
+    .columns-3 { columns: 3; }
+    .columns-4 { columns: 4; }
+    .break-inside-avoid { break-inside: avoid; }
+    .space-y-4 > * + * { margin-top: 1rem; }
+    .aspect-square { aspect-ratio: 1; }
+    .absolute { position: absolute; }
+    .relative { position: relative; }
+    .fixed { position: fixed; }
+    .inset-0 { top: 0; left: 0; right: 0; bottom: 0; }
+    .z-20 { z-index: 20; }
+    .z-50 { z-index: 50; }
+    .top-0 { top: 0; }
+    .bottom-0 { bottom: 0; }
+    .left-0 { left: 0; }
+    .right-0 { right: 0; }
+    .top-2 { top: 0.5rem; }
+    .top-3 { top: 0.75rem; }
+    .top-4 { top: 1rem; }
+    .right-2 { right: 0.5rem; }
+    .right-3 { right: 0.75rem; }
+    .right-4 { right: 1rem; }
+    .bottom-4 { bottom: 1rem; }
+    .p-3 { padding: 0.75rem; }
+    .w-12 { width: 3rem; }
+    .w-14 { width: 3.5rem; }
+    .w-16 { width: 4rem; }
+    .h-12 { height: 3rem; }
+    .h-14 { height: 3.5rem; }
+    .h-16 { height: 4rem; }
+    .w-2 { width: 0.5rem; }
+    .h-2 { height: 0.5rem; }
+    .animate-spin { animation: spin 1s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .fade-in { animation: fadeIn 0.8s ease-in-out; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .opacity-0 { opacity: 0; }
+    .group:hover .group-hover\:opacity-100 { opacity: 1; }
+    .overflow-hidden { overflow: hidden; }
+    .overflow-y-auto { overflow-y: auto; }
+    .leading-relaxed { line-height: 1.625; }
+    .border-3 { border-width: 3px; }
+    .border-t-rose-500 { border-top-color: #722F37; }
+    .border-rose-200 { border-color: #EBD5D8; }
+    .max-h-\[90vh\] { max-height: 90vh; }
+    .max-h-\[85vh\] { max-height: 85vh; }
+    .max-h-\[80vh\] { max-height: 80vh; }
+    .max-w-5xl { max-width: 64rem; }
+    .w-7 { width: 1.75rem; }
+    .h-7 { height: 1.75rem; }
+    .w-8 { width: 2rem; }
+    .h-8 { height: 2rem; }
+    .w-9 { width: 2.25rem; }
+    .h-9 { height: 2.25rem; }
+    .w-10 { width: 2.5rem; }
+    .h-10 { height: 2.5rem; }
+    .w-5 { width: 1.25rem; }
+    .h-5 { height: 1.25rem; }
+    .w-4 { width: 1rem; }
+    .h-4 { height: 1rem; }
+    .gap-2 { gap: 0.5rem; }
+    .px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
+    .px-4 { padding-left: 1rem; padding-right: 1rem; }
+    .px-5 { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
+    .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+    .py-2\.5 { padding-top: 0.625rem; padding-bottom: 0.625rem; }
+    .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+    .border-white\/20 { border-color: rgba(255,255,255,0.2); }
+    .text-white\/40 { color: rgba(255,255,255,0.4); }
+    .text-white\/50 { color: rgba(255,255,255,0.5); }
+    .text-white\/60 { color: rgba(255,255,255,0.6); }
+    .text-white\/70 { color: rgba(255,255,255,0.7); }
+    .bg-black\/60 { background: rgba(0,0,0,0.6); }
+    .bg-black\/70 { background: rgba(0,0,0,0.7); }
+    .bg-black\/90 { background: rgba(0,0,0,0.9); }
+    .bg-white\/10 { background: rgba(255,255,255,0.1); }
+    .bg-white\/80 { background: rgba(255,255,255,0.8); }
+    .bg-gradient-to-t { background: linear-gradient(to top, var(--from), transparent); }
+    .from-black\/50 { --from: rgba(0,0,0,0.5); }
+    .from-black\/60 { --from: rgba(0,0,0,0.6); }
+    .from-black\/70 { --from: rgba(0,0,0,0.7); }
+    .pointer-events-none { pointer-events: none; }
+    .opacity-60 { opacity: 0.6; }
+    .scale-\[1\.01\] { transform: scale(1.01); }
+    .grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-cols-1 { grid-template-columns: 1fr; }
+    .hover\:bg-white\/20:hover { background: rgba(255,255,255,0.2); }
+    @media (min-width: 768px) {
+      .md\:columns-3 { columns: 3; }
+      .md\:grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+      .md\:grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+      .md\:text-6xl { font-size: 3.75rem; }
+    }
+    @media (min-width: 1024px) {
+      .lg\:columns-4 { columns: 4; }
+      .lg\:grid-cols-5 { grid-template-columns: repeat(5, 1fr); }
+    }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; border: none; font-family: inherit; }
+    input { font-family: inherit; }
+    .placeholder-stone-400::placeholder { color: #a8a29e; }
+    .backdrop { backdrop-filter: blur(4px); }
+    .botanical-header { width: 100%; height: 130px; background-image: url('botanical-header.jpg'); background-size: cover; background-position: top center; background-repeat: no-repeat; }
+    .botanical-footer { width: 100%; height: 130px; background-image: url('botanical-footer.jpg'); background-size: cover; background-position: bottom center; background-repeat: no-repeat; }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    // API_BASE: deploy tool rewrites __PORT_3000__ to proxy path
+    var PLACEHOLDER = "__PORT_3000__";
+    var API_BASE = PLACEHOLDER.startsWith("__") ? "" : PLACEHOLDER;
+
+    function isVideo(mimeType) {
+      return mimeType && mimeType.startsWith("video/");
+    }
+
+    function formatTime(iso) {
+      var d = new Date(iso);
+      return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+
+    // Shared back button SVG icons
+    var BACK_ARROW_SVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>';
+    var DOWNLOAD_SVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>';
+    var CHECK_SVG = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>';
+
+    // ===== Router =====
+    function router() {
+      var hash = window.location.hash.slice(1) || '/';
+      var parts = hash.split('/');
+      var page = parts[1] || '';
+      var app = document.getElementById('app');
+      
+      if (page === 'upload') {
+        renderUpload(app);
+      } else if (page === 'gallery') {
+        renderGallery(app);
+      } else if (page === 'slideshow') {
+        renderSlideshow(app);
+      } else if (page === 'admin') {
+        renderAdmin(app);
+      } else {
+        renderHome(app);
+      }
+    }
+
+    // ===== Home Page =====
+    function renderHome(el) {
+      var uploadUrl = window.location.origin + window.location.pathname + '#/upload';
+      el.innerHTML = '\
+        <main class="min-h-screen bg-gradient-to-br from-rose-50 via-white to-amber-50 flex flex-col">\
+          <div class="botanical-header"></div>\
+          <div class="flex-1 flex items-center justify-center p-6">\
+            <div class="max-w-2xl w-full text-center">\
+            <div class="mb-12">\
+              <p class="text-sm uppercase tracking-wide text-rose-400 mb-3">Together with Love</p>\
+              <h1 class="font-serif text-5xl md:text-6xl text-stone-800 mb-2">Jessalynn & Dylan</h1>\
+              <p class="text-sm text-stone-500 mb-4">September 27, 2026 · Leach Botanical Garden</p>\
+              <div style="width:4rem;height:1px;background:#5C6B3D;margin:0 auto 1.5rem;"></div>\
+              <p class="text-stone-600 text-lg leading-relaxed">Help us capture every angle of our special day. Upload your photos and videos — they will appear in our live gallery instantly.</p>\
+            </div>\
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">\
+              <a href="#/upload" class="group bg-white rounded-2xl p-8 shadow-sm border border-stone-100 hover:shadow-md hover:border-rose-200 transition-all">\
+                <div class="w-14 h-14 mx-auto mb-4 rounded-full bg-rose-50 flex items-center justify-center group-hover:bg-rose-100 transition-all">\
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#722F37" stroke-width="2"><path d="M12 2C8 6 6 10 6 14a6 6 0 0 0 12 0c0-4-2-8-6-12z"/><path d="M12 22V8"/></svg>\
+                </div>\
+                <h2 class="font-serif text-xl text-stone-800 mb-1">Upload Photos</h2>\
+                <p class="text-sm text-stone-500">Share your snaps and clips</p>\
+              </a>\
+              <a href="#/gallery" class="group bg-white rounded-2xl p-8 shadow-sm border border-stone-100 hover:shadow-md hover:border-rose-200 transition-all">\
+                <div class="w-14 h-14 mx-auto mb-4 rounded-full bg-amber-50 flex items-center justify-center group-hover:bg-amber-100 transition-all">\
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#5C6B3D" stroke-width="2"><path d="M12 2C8 6 6 10 6 14a6 6 0 0 0 12 0c0-4-2-8-6-12z"/><path d="M12 22V8"/></svg>\
+                </div>\
+                <h2 class="font-serif text-xl text-stone-800 mb-1">View Gallery</h2>\
+                <p class="text-sm text-stone-500">Browse everyone\'s photos</p>\
+              </a>\
+              <a href="#/slideshow" class="group bg-white rounded-2xl p-8 shadow-sm border border-stone-100 hover:shadow-md hover:border-rose-200 transition-all">\
+                <div class="w-14 h-14 mx-auto mb-4 rounded-full bg-violet-50 flex items-center justify-center group-hover:bg-violet-100 transition-all">\
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#722F37" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>\
+                </div>\
+                <h2 class="font-serif text-xl text-stone-800 mb-1">Live Slideshow</h2>\
+                <p class="text-sm text-stone-500">Auto-playing photo wall</p>\
+              </a>\
+            </div>\
+            <div class="bg-white rounded-2xl p-8 shadow-sm border border-stone-100">\
+              <h2 class="font-serif text-2xl text-stone-800 mb-2">QR Code for Guests</h2>\
+              <p class="text-sm text-stone-500 mb-6">Display this at tables or print it for your welcome sign</p>\
+              <div id="qr-container">\
+                <button onclick="generateQR()" class="px-6 py-3 bg-rose-500 text-white rounded-full font-medium hover:bg-rose-600 transition-all">Show QR Code</button>\
+              </div>\
+            </div>\
+            <p class="text-xs text-stone-400 mt-12">Made with love for our wedding day</p>\
+            <p class="text-xs text-stone-400 mt-2">Cheers to Forever</p>\
+          </div>\
+          </div>\
+          <div class="botanical-footer"></div>\
+        </main>';
+
+      window._uploadUrl = uploadUrl;
+    }
+
+    function generateQR() {
+      var container = document.getElementById('qr-container');
+      var url = window._uploadUrl || (window.location.origin + window.location.pathname + '#/upload');
+      
+      var script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js';
+      script.onload = function() {
+        var qr = qrcode(0, 'H');
+        qr.addData(url);
+        qr.make();
+        var svg = qr.createSvgTag({ cellSize: 3, margin: 4 });
+        container.innerHTML = '<div class="flex flex-col items-center gap-4">' +
+          '<div class="bg-white p-6 rounded-xl border-2 border-stone-100">' + svg + '</div>' +
+          '<p class="text-xs text-stone-400 break-all" style="max-width:20rem;">' + url + '</p>' +
+          '</div>';
+      };
+      document.head.appendChild(script);
+    }
+
+    // ===== Upload Page =====
+    function renderUpload(el) {
+      el.innerHTML = '\
+        <main class="min-h-screen bg-gradient-to-br from-rose-50 via-white to-amber-50 flex flex-col">\
+          <div class="botanical-header"></div>\
+          <div class="flex-1 p-6">\
+          <div class="max-w-2xl mx-auto">\
+            <div class="text-center mb-8 pt-8">\
+              <a href="#/" class="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-stone-200 text-sm text-stone-600 hover:text-stone-800 hover:border-stone-300 shadow-sm transition-all">' + BACK_ARROW_SVG + ' Back to Home</a>\
+              <h1 class="font-serif text-4xl text-stone-800 mt-6 mb-2">Upload Your Photos</h1>\
+              <div style="width:3rem;height:1px;background:#5C6B3D;margin:0 auto 1rem;"></div>\
+              <p class="text-stone-600">Drag and drop or tap to select — photos and videos welcome</p>\
+            </div>\
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-stone-100 mb-4">\
+              <div class="grid grid-cols-1 gap-4">\
+                <div>\
+                  <label class="block text-sm font-medium text-stone-700 mb-2">Your Name</label>\
+                  <input type="text" id="guestName" placeholder="e.g. Aunt Jane" class="w-full px-4 py-2.5 rounded-lg border border-stone-200 focus:border-rose-300 outline-none transition-all text-stone-800" />\
+                </div>\
+                <div>\
+                  <label class="block text-sm font-medium text-stone-700 mb-2">Caption (optional)</label>\
+                  <input type="text" id="caption" placeholder="e.g. First dance!" class="w-full px-4 py-2.5 rounded-lg border border-stone-200 focus:border-rose-300 outline-none transition-all text-stone-800" />\
+                </div>\
+              </div>\
+            </div>\
+            <div id="dropzone" class="bg-white rounded-2xl p-12 shadow-sm border-2 border-dashed border-stone-200 hover:border-rose-300 transition-all cursor-pointer text-center">\
+              <div class="flex flex-col items-center gap-3">\
+                <div class="w-16 h-16 rounded-full bg-rose-50 flex items-center justify-center">\
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#722F37" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>\
+                </div>\
+                <p class="font-serif text-xl text-stone-800">Drag & drop or tap to browse</p>\
+                <p class="text-sm text-stone-400">JPG, PNG, WebP, HEIC, MP4, MOV — up to 100MB each</p>\
+              </div>\
+              <input type="file" id="fileInput" multiple accept="image/*,video/*" style="display:none" />\
+            </div>\
+            <div id="uploadStatus"></div>\
+            <p class="text-center text-xs text-stone-400 mt-6">Tip: If upload fails, text your photos to Jessalynn or Dylan directly</p>\
+          </div>\
+          </div>\
+          <div class="botanical-footer"></div>\
+        </main>';
+
+      var dropzone = document.getElementById('dropzone');
+      var fileInput = document.getElementById('fileInput');
+
+      dropzone.addEventListener('click', function() { fileInput.click(); });
+      fileInput.addEventListener('change', function(e) { handleFiles(e.target.files); });
+
+      dropzone.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        dropzone.style.borderColor = '#722F37';
+        dropzone.style.background = '#F5EBED';
+      });
+      dropzone.addEventListener('dragleave', function(e) {
+        e.preventDefault();
+        dropzone.style.borderColor = '#e7e5e4';
+        dropzone.style.background = '#fff';
+      });
+      dropzone.addEventListener('drop', function(e) {
+        e.preventDefault();
+        dropzone.style.borderColor = '#e7e5e4';
+        dropzone.style.background = '#fff';
+        handleFiles(e.dataTransfer.files);
+      });
+    }
+
+    async function handleFiles(files) {
+      if (!files || files.length === 0) return;
+      var statusEl = document.getElementById('uploadStatus');
+      var dropzone = document.getElementById('dropzone');
+      dropzone.style.opacity = '0.6';
+      dropzone.style.pointerEvents = 'none';
+      
+      var successCount = 0;
+      var lastError = '';
+
+      for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        statusEl.innerHTML = '<div class="mt-4 bg-rose-50 border border-rose-100 rounded-xl p-4 flex items-center gap-3">\
+          <div class="w-8 h-8 rounded-full border-3 border-rose-200 border-t-rose-500 animate-spin"></div>\
+          <p class="text-stone-600 font-medium">Uploading ' + (i + 1) + ' of ' + files.length + '...</p>\
+        </div>';
+
+        var formData = new FormData();
+        formData.append('file', file);
+        formData.append('caption', document.getElementById('caption').value || '');
+        formData.append('guestName', document.getElementById('guestName').value || '');
+
+        try {
+          var res = await fetch(API_BASE + '/api/upload', { method: 'POST', body: formData });
+          if (res.ok) {
+            successCount++;
+          } else {
+            var data = await res.json();
+            lastError = data.error || 'Upload failed';
+          }
+        } catch(e) {
+          lastError = 'Network error — please try again';
+        }
+      }
+
+      dropzone.style.opacity = '1';
+      dropzone.style.pointerEvents = 'auto';
+
+      if (successCount > 0) {
+        statusEl.innerHTML = '<div class="mt-4 bg-green-50 border border-green-100 rounded-xl p-4 flex flex-col items-center gap-3">\
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>\
+          <p class="font-serif text-xl text-stone-800">' + successCount + (successCount === 1 ? ' photo' : ' photos') + ' uploaded!</p>\
+          <p class="text-sm text-stone-500">Thank you for sharing. Upload more or view the gallery.</p>\
+          <div class="flex gap-3 mt-2">\
+            <button onclick="document.getElementById(\'fileInput\').value=\'\';document.getElementById(\'uploadStatus\').innerHTML=\'\';" class="px-5 py-2.5 bg-rose-500 text-white rounded-full font-medium hover:bg-rose-600 transition-all text-sm">Upload More</button>\
+            <a href="#/gallery" class="px-5 py-2.5 bg-white text-stone-700 rounded-full font-medium border border-stone-200 hover:border-stone-300 transition-all text-sm inline-flex items-center">View Gallery</a>\
+          </div>\
+        </div>';
+      } else {
+        statusEl.innerHTML = '<div class="mt-4 bg-red-50 border border-red-100 rounded-xl p-4 flex items-center gap-3">\
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>\
+          <p class="text-sm text-red-700">' + lastError + '</p>\
+        </div>';
+      }
+    }
+
+    // ===== Gallery Page =====
+    var galleryState = { media: [], selectMode: false, selected: {} };
+
+    async function renderGallery(el) {
+      el.innerHTML = '\
+        <main class="min-h-screen bg-gradient-to-br from-amber-50 via-white to-rose-50 flex flex-col">\
+          <div class="botanical-header"></div>\
+          <div class="flex-1 p-6">\
+          <div class="max-w-6xl mx-auto">\
+            <div class="flex items-center justify-between mb-6 pt-4">\
+              <div class="flex items-center gap-3">\
+                <a href="#/" class="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-stone-200 text-sm text-stone-600 hover:text-stone-800 hover:border-stone-300 shadow-sm transition-all">' + BACK_ARROW_SVG + ' Home</a>\
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5C6B3D" stroke-width="2"><path d="M12 2C8 6 6 10 6 14a6 6 0 0 0 12 0c0-4-2-8-6-12z"/><path d="M12 22V8"/></svg>\
+                <h1 class="font-serif text-3xl text-stone-800">Gallery</h1>\
+              </div>\
+              <div class="flex items-center gap-2">\
+                <a href="#/upload" class="inline-flex items-center gap-2 px-4 py-2 bg-rose-500 text-white rounded-full text-sm font-medium hover:bg-rose-600 transition-all">\
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>\
+                  Upload\
+                </a>\
+                <a href="#/slideshow" class="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-stone-200 text-sm text-stone-600 hover:text-stone-800 hover:border-stone-300 transition-all">\
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>\
+                  Slideshow\
+                </a>\
+              </div>\
+            </div>\
+            <div class="flex items-center justify-between mb-6">\
+              <p id="gallery-count" class="text-sm text-stone-500">Loading...</p>\
+              <div class="flex items-center gap-2">\
+                <button id="select-toggle" onclick="toggleSelectMode()" class="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-stone-200 text-sm text-stone-600 hover:text-stone-800 hover:border-stone-300 transition-all">\
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><polyline points="9 11 12 14 15 9" style="display:none" class="check-icon"/></svg>\
+                  <span id="select-toggle-text">Select Photos</span>\
+                </button>\
+                <button id="download-selected-btn" onclick="downloadSelected()" class="hidden inline-flex items-center gap-2 px-4 py-2 bg-rose-500 text-white rounded-full text-sm font-medium hover:bg-rose-600 transition-all">\
+                  ' + DOWNLOAD_SVG + '\
+                  <span id="download-selected-text">Download Selected</span>\
+                </button>\
+                <button onclick="refreshGallery()" class="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-stone-200 text-sm text-stone-600 hover:text-stone-800 hover:border-stone-300 transition-all">\
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>\
+                  Refresh\
+                </button>\
+              </div>\
+            </div>\
+            <div id="gallery-content" class="flex flex-col items-center justify-center py-24">\
+              <div class="w-12 h-12 rounded-full border-3 border-rose-200 border-t-rose-500 animate-spin"></div>\
+            </div>\
+          </div>\
+          </div>\
+          <div class="botanical-footer"></div>\
+        </main>';
+
+      galleryState.selectMode = false;
+      galleryState.selected = {};
+      await refreshGallery();
+    }
+
+    async function refreshGallery() {
+      try {
+        var res = await fetch(API_BASE + '/api/upload');
+        var data = await res.json();
+        var media = data.media || [];
+        
+        var countEl = document.getElementById('gallery-count');
+        var contentEl = document.getElementById('gallery-content');
+        
+        if (!countEl || !contentEl) return;
+        
+        countEl.textContent = media.length + (media.length === 1 ? ' photo' : ' photos') + ' shared';
+        
+        if (media.length === 0) {
+          contentEl.innerHTML = '<div class="flex flex-col items-center justify-center py-24 text-center">\
+            <div class="w-20 h-20 rounded-full bg-stone-100 flex items-center justify-center mb-4">\
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#d6d3d1" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>\
+            </div>\
+            <p class="font-serif text-2xl text-stone-700 mb-2">No photos yet</p>\
+            <p class="text-sm text-stone-400 mb-6">Be the first to share a moment</p>\
+            <a href="#/upload" class="px-6 py-3 bg-rose-500 text-white rounded-full font-medium hover:bg-rose-600 transition-all">Upload a Photo</a>\
+          </div>';
+        } else {
+          var html = '<div class="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">';
+          media.forEach(function(item) {
+            var src = API_BASE + '/uploads/' + item.filename;
+            var mediaEl = isVideo(item.mimeType) 
+              ? '<video src="' + src + '" class="w-full h-auto object-cover" muted playsinline></video>'
+              : '<img src="' + src + '" alt="' + (item.caption || item.guestName || 'Wedding photo') + '" class="w-full h-auto object-cover" loading="lazy" />';
+            
+            var selectCheckbox = galleryState.selectMode
+              ? '<div class="absolute top-3 left-3 z-20 w-8 h-8 rounded-full border-2 ' + (galleryState.selected[item.id] ? 'bg-rose-500 border-rose-500 text-white' : 'bg-white/80 border-white text-transparent') + ' flex items-center justify-center cursor-pointer transition-all" onclick="event.stopPropagation();toggleSelect(\'' + item.id + '\')">' + (galleryState.selected[item.id] ? CHECK_SVG : '') + '</div>'
+              : '';
+            
+            var downloadBtn = galleryState.selectMode ? '' : '<button class="absolute top-3 right-3 z-20 w-9 h-9 rounded-full bg-black/50 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:bg-black/70" onclick="event.stopPropagation();downloadSingle(\'' + item.id + '\')" title="Download">' + DOWNLOAD_SVG + '</button>';
+            
+            var clickHandler = galleryState.selectMode 
+              ? 'onclick="toggleSelect(\'' + item.id + '\')"'
+              : 'onclick="openLightbox(\'' + item.id + '\')"';
+            
+            html += '<div class="break-inside-avoid cursor-pointer group relative overflow-hidden rounded-xl shadow-sm hover:shadow-md transition-all" ' + clickHandler + '>' +
+              mediaEl +
+              selectCheckbox +
+              downloadBtn +
+              '<div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-all flex items-end p-3 pointer-events-none">' +
+              (item.caption ? '<p class="text-white text-sm font-medium">' + item.caption + '</p>' : '') +
+              (item.guestName ? '<p class="text-white/60 text-xs absolute top-2 right-2">' + item.guestName + '</p>' : '') +
+              '</div></div>';
+          });
+          html += '</div>';
+          contentEl.innerHTML = html;
+          
+          window._galleryMedia = media;
+          galleryState.media = media;
+          updateDownloadSelectedBtn();
+        }
+      } catch(e) {
+        var countEl = document.getElementById('gallery-count');
+        if (countEl) countEl.textContent = 'Failed to load photos';
+      }
+    }
+
+    function toggleSelectMode() {
+      galleryState.selectMode = !galleryState.selectMode;
+      if (!galleryState.selectMode) galleryState.selected = {};
+      
+      var btn = document.getElementById('select-toggle');
+      var downloadBtn = document.getElementById('download-selected-btn');
+      if (btn) {
+        btn.innerHTML = galleryState.selectMode
+          ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> <span>Cancel Selection</span>'
+          : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg> <span>Select Photos</span>';
+        if (galleryState.selectMode) {
+          btn.classList.add('bg-stone-800', 'text-white', 'border-stone-800');
+          btn.classList.remove('bg-white', 'text-stone-600', 'border-stone-200');
+        } else {
+          btn.classList.remove('bg-stone-800', 'text-white', 'border-stone-800');
+          btn.classList.add('bg-white', 'text-stone-600', 'border-stone-200');
+        }
+      }
+      
+      if (downloadBtn) {
+        if (galleryState.selectMode) {
+          downloadBtn.classList.remove('hidden');
+        } else {
+          downloadBtn.classList.add('hidden');
+        }
+      }
+      
+      refreshGallery();
+    }
+
+    function toggleSelect(id) {
+      galleryState.selected[id] = !galleryState.selected[id];
+      if (!galleryState.selected[id]) delete galleryState.selected[id];
+      updateDownloadSelectedBtn();
+      
+      // Update checkbox visual without full re-render
+      var media = galleryState.media;
+      var item = media.find(function(m) { return m.id === id; });
+      if (item) {
+        // Re-render to update checkbox states
+        refreshGallery();
+      }
+    }
+
+    function updateDownloadSelectedBtn() {
+      var count = Object.keys(galleryState.selected).length;
+      var btn = document.getElementById('download-selected-btn');
+      var text = document.getElementById('download-selected-text');
+      if (btn && text) {
+        text.textContent = count > 0 ? 'Download Selected (' + count + ')' : 'Download Selected';
+        if (count > 0) {
+          btn.classList.remove('opacity-60', 'pointer-events-none');
+        } else {
+          btn.classList.add('opacity-60', 'pointer-events-none');
+        }
+      }
+    }
+
+    async function downloadSingle(id) {
+      var media = window._galleryMedia || [];
+      var item = media.find(function(m) { return m.id === id; });
+      if (!item) return;
+      
+      var src = API_BASE + '/uploads/' + item.filename;
+      var filename = item.originalName || item.filename;
+      // Preserve file extension
+      var ext = item.mimeType && item.mimeType.split('/')[1];
+      if (ext && !filename.includes('.')) filename = filename + '.' + ext;
+      
+      try {
+        var res = await fetch(src);
+        var blob = await res.blob();
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
+      } catch(e) {
+        // Fallback: open in new tab
+        window.open(src, '_blank');
+      }
+    }
+
+    async function downloadSelected() {
+      var ids = Object.keys(galleryState.selected);
+      if (ids.length === 0) return;
+      
+      var btn = document.getElementById('download-selected-btn');
+      var originalHTML = btn ? btn.innerHTML : '';
+      if (btn) {
+        btn.innerHTML = '<div class="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin"></div> <span>Zipping...</span>';
+        btn.style.pointerEvents = 'none';
+      }
+      
+      try {
+        // Load JSZip if not already loaded
+        if (typeof JSZip === 'undefined') {
+          await loadScript('https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js');
+        }
+        
+        var zip = new JSZip();
+        var media = galleryState.media;
+        var added = 0;
+        
+        for (var i = 0; i < ids.length; i++) {
+          var item = media.find(function(m) { return m.id === ids[i]; });
+          if (!item) continue;
+          
+          var src = API_BASE + '/uploads/' + item.filename;
+          var filename = item.originalName || item.filename;
+          var ext = item.mimeType && item.mimeType.split('/')[1];
+          if (ext && !filename.includes('.')) filename = filename + '.' + ext;
+          
+          // Avoid duplicate filenames
+          if (zip.file(filename)) {
+            var baseName = filename.replace(/\.[^.]+$/, '');
+            var extension = filename.match(/\.[^.]+$/);
+            filename = baseName + '_' + ids[i].substring(0, 4) + (extension ? extension[0] : '');
+          }
+          
+          if (btn) {
+            btn.innerHTML = '<div class="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin"></div> <span>Downloading ' + (i + 1) + '/' + ids.length + '...</span>';
+          }
+          
+          try {
+            var res = await fetch(src);
+            var blob = await res.blob();
+            zip.file(filename, blob);
+            added++;
+          } catch(e) {
+            console.error('Failed to fetch', filename, e);
+          }
+        }
+        
+        if (added > 0) {
+          if (btn) {
+            btn.innerHTML = '<div class="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin"></div> <span>Creating ZIP...</span>';
+          }
+          var zipBlob = await zip.generateAsync({ type: 'blob' });
+          var url = URL.createObjectURL(zipBlob);
+          var a = document.createElement('a');
+          a.href = url;
+          a.download = 'wedding-photos-' + new Date().toISOString().split('T')[0] + '.zip';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          setTimeout(function() { URL.revokeObjectURL(url); }, 2000);
+        }
+      } catch(e) {
+        console.error('ZIP download failed:', e);
+        alert('Could not create ZIP file. Try downloading photos individually.');
+      } finally {
+        if (btn) {
+          btn.innerHTML = originalHTML;
+          btn.style.pointerEvents = 'auto';
+        }
+      }
+    }
+
+    function loadScript(src) {
+      return new Promise(function(resolve, reject) {
+        var s = document.createElement('script');
+        s.src = src;
+        s.onload = resolve;
+        s.onerror = reject;
+        document.head.appendChild(s);
+      });
+    }
+
+    function openLightbox(id) {
+      var media = window._galleryMedia || [];
+      var item = media.find(function(m) { return m.id === id; });
+      if (!item) return;
+      
+      var src = API_BASE + '/uploads/' + item.filename;
+      var filename = item.originalName || item.filename;
+      var ext = item.mimeType && item.mimeType.split('/')[1];
+      if (ext && !filename.includes('.')) filename = filename + '.' + ext;
+      
+      var mediaEl = isVideo(item.mimeType)
+        ? '<video src="' + src + '" controls autoplay class="max-w-full max-h-[80vh] object-contain rounded-lg"></video>'
+        : '<img src="' + src + '" alt="' + (item.caption || 'Wedding photo') + '" class="max-w-full max-h-[80vh] object-contain rounded-lg" />';
+      
+      var overlay = document.createElement('div');
+      overlay.className = 'fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-6 backdrop';
+      overlay.id = 'lightbox-overlay';
+      overlay.onclick = function(e) {
+        if (e.target === overlay) closeLightbox();
+      };
+      overlay.innerHTML = '<div class="relative max-w-5xl max-h-[90vh] w-full flex flex-col items-center">' +
+        mediaEl +
+        (item.caption ? '<p class="text-white text-center mt-4 font-serif text-lg">' + item.caption + '</p>' : '') +
+        (item.guestName ? '<p class="text-white/50 text-sm mt-1">— ' + item.guestName + '</p>' : '') +
+        '<div class="flex items-center gap-3 mt-6">' +
+          '<button class="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 rounded-full border border-white/20 text-sm text-white transition-all" onclick="downloadSingle(\'' + item.id + '\')">' + DOWNLOAD_SVG + ' Download</button>' +
+          '<button class="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 rounded-full border border-white/20 text-sm text-white transition-all" onclick="closeLightbox()">✕ Close</button>' +
+        '</div>' +
+        '</div>';
+      document.body.appendChild(overlay);
+      
+      // Esc key to close
+      document.addEventListener('keydown', function escClose(e) {
+        if (e.key === 'Escape') {
+          closeLightbox();
+          document.removeEventListener('keydown', escClose);
+        }
+      });
+    }
+
+    function closeLightbox() {
+      var overlay = document.getElementById('lightbox-overlay');
+      if (overlay) document.body.removeChild(overlay);
+    }
+
+    // ===== Slideshow Page =====
+    var slideshowState = { media: [], currentIndex: 0, interval: null, advanceTimer: null };
+
+    async function renderSlideshow(el) {
+      el.innerHTML = '\
+        <main class="min-h-screen bg-black flex items-center justify-center overflow-hidden relative">\
+          <div class="absolute top-0 left-0 right-0 z-20 p-4 flex items-center justify-between bg-gradient-to-b from-black/60 to-transparent">\
+            <a href="#/" class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-full border border-white/20 text-sm text-white transition-all">' + BACK_ARROW_SVG + ' Exit Slideshow</a>\
+            <div class="flex items-center gap-4">\
+              <span id="slideshow-count" class="text-white/50 text-sm">Loading...</span>\
+            </div>\
+          </div>\
+          <div id="slideshow-content" class="flex flex-col items-center">\
+            <div class="w-16 h-16 rounded-full border-4 border-white/10 border-t-white/40 animate-spin mb-6"></div>\
+            <p class="font-serif text-3xl text-white/80">Waiting for photos...</p>\
+            <p class="text-white/40 mt-2">Photos will appear here automatically as guests upload them</p>\
+          </div>\
+        </main>';
+
+      await fetchSlideshowMedia();
+      
+      if (slideshowState.interval) clearInterval(slideshowState.interval);
+      if (slideshowState.advanceTimer) clearInterval(slideshowState.advanceTimer);
+      slideshowState.interval = setInterval(fetchSlideshowMedia, 20000);
+      
+      // Auto-advance every 5 seconds
+      slideshowState.advanceTimer = setInterval(function() {
+        if (slideshowState.media.length > 0) {
+          slideshowState.currentIndex = (slideshowState.currentIndex + 1) % slideshowState.media.length;
+          renderSlideshowSlide();
+        }
+      }, 5000);
+    }
+
+    async function fetchSlideshowMedia() {
+      try {
+        var res = await fetch(API_BASE + '/api/upload');
+        var data = await res.json();
+        if (data.media && data.media.length > 0) {
+          slideshowState.media = data.media;
+          renderSlideshowSlide();
+        }
+      } catch(e) {}
+    }
+
+    function renderSlideshowSlide() {
+      var countEl = document.getElementById('slideshow-count');
+      var contentEl = document.getElementById('slideshow-content');
+      if (!countEl || !contentEl) return;
+      
+      var media = slideshowState.media;
+      if (media.length === 0) return;
+      
+      var current = media[slideshowState.currentIndex % media.length];
+      countEl.textContent = (slideshowState.currentIndex + 1) + ' / ' + media.length;
+      
+      var src = API_BASE + '/uploads/' + current.filename;
+      var mediaEl = isVideo(current.mimeType)
+        ? '<video src="' + src + '" class="max-w-full max-h-[85vh] object-contain rounded-lg" autoplay muted loop playsinline></video>'
+        : '<img src="' + src + '" alt="' + (current.caption || 'Wedding photo') + '" class="max-w-full max-h-[85vh] object-contain rounded-lg fade-in" />';
+      
+      var captionHtml = '';
+      if (current.caption || current.guestName) {
+        captionHtml = '<div class="absolute bottom-0 left-0 right-0 z-20 p-8 bg-gradient-to-t from-black/70 to-transparent text-center">' +
+          (current.caption ? '<p class="font-serif text-2xl text-white mb-1">' + current.caption + '</p>' : '') +
+          (current.guestName ? '<p class="text-white/50 text-sm">— ' + current.guestName + '</p>' : '') +
+          '</div>';
+      }
+      
+      contentEl.className = 'fade-in w-full h-full flex items-center justify-center p-8';
+      contentEl.innerHTML = mediaEl + captionHtml;
+    }
+
+    // ===== Admin Page =====
+    var adminState = { authed: false, password: 'admin', media: [] };
+
+    function renderAdmin(el) {
+      if (!adminState.authed) {
+        el.innerHTML = '\
+          <main class="min-h-screen bg-stone-900 flex items-center justify-center p-6">\
+            <div class="max-w-sm w-full bg-stone-800 rounded-2xl p-8 shadow-xl">\
+              <div class="text-center mb-6">\
+                <div class="w-14 h-14 mx-auto rounded-full bg-stone-700 flex items-center justify-center mb-4">\
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#a8a29e" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>\
+                </div>\
+                <h1 class="font-serif text-2xl text-white">Admin Access</h1>\
+                <p class="text-sm text-stone-400 mt-1">Enter password to manage photos</p>\
+              </div>\
+              <form onsubmit="adminLogin(event)" class="space-y-4">\
+                <input type="password" id="adminPass" placeholder="Password" autofocus class="w-full px-4 py-3 rounded-lg bg-stone-700 border border-stone-600 text-white placeholder-stone-400 outline-none" />\
+                <p id="adminError" class="text-red-400 text-sm hidden"></p>\
+                <button type="submit" class="w-full py-3 bg-rose-500 text-white rounded-lg font-medium hover:bg-rose-600 transition-all">Log In</button>\
+              </form>\
+              <p class="text-xs text-stone-500 mt-4 text-center">Default password: <code class="text-stone-400">admin</code></p>\
+            </div>\
+          </main>';
+      } else {
+        renderAdminDashboard(el);
+      }
+    }
+
+    function adminLogin(e) {
+      e.preventDefault();
+      var pass = document.getElementById('adminPass').value;
+      if (pass === adminState.password) {
+        adminState.authed = true;
+        renderAdmin(document.getElementById('app'));
+      } else {
+        var err = document.getElementById('adminError');
+        err.textContent = 'Incorrect password';
+        err.classList.remove('hidden');
+      }
+    }
+
+    async function renderAdminDashboard(el) {
+      el.innerHTML = '\
+        <main class="min-h-screen bg-stone-100 flex flex-col">\
+          <div class="botanical-header"></div>\
+          <div class="flex-1 p-6">\
+          <div class="max-w-6xl mx-auto">\
+            <div class="flex items-center justify-between mb-6 pt-4">\
+              <div class="flex items-center gap-3">\
+                <a href="#/" class="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-stone-200 text-sm text-stone-600 hover:text-stone-800 hover:border-stone-300 shadow-sm transition-all">' + BACK_ARROW_SVG + ' Home</a>\
+                <h1 class="font-serif text-3xl text-stone-800">Admin Dashboard</h1>\
+              </div>\
+              <div class="flex items-center gap-2">\
+                <button onclick="refreshAdmin()" class="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-stone-200 text-sm text-stone-600 hover:text-stone-800 hover:border-stone-300 transition-all">\
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>\
+                  Refresh\
+                </button>\
+              </div>\
+            </div>\
+            <div id="admin-stats" class="grid grid-cols-3 gap-4 mb-6"></div>\
+            <div id="admin-grid" class="flex items-center justify-center py-24">\
+              <div class="w-12 h-12 rounded-full border-3 border-stone-200 border-t-rose-500 animate-spin"></div>\
+            </div>\
+          </div>\
+          </div>\
+          <div class="botanical-footer"></div>\
+        </main>';
+      
+      await refreshAdmin();
+    }
+
+    async function refreshAdmin() {
+      try {
+        var res = await fetch(API_BASE + '/api/upload?admin=true');
+        var data = await res.json();
+        adminState.media = data.media || [];
+        
+        var statsEl = document.getElementById('admin-stats');
+        var gridEl = document.getElementById('admin-grid');
+        if (!statsEl || !gridEl) return;
+        
+        var pending = adminState.media.filter(function(m) { return !m.approved; });
+        var approved = adminState.media.filter(function(m) { return m.approved; });
+        
+        statsEl.innerHTML = '\
+          <div class="bg-white rounded-xl p-4 shadow-sm"><p class="text-3xl font-serif text-stone-800">' + adminState.media.length + '</p><p class="text-xs text-stone-500 mt-1">Total Photos</p></div>\
+          <div class="bg-white rounded-xl p-4 shadow-sm"><p class="text-3xl font-serif text-green-500">' + approved.length + '</p><p class="text-xs text-stone-500 mt-1">Approved</p></div>\
+          <div class="bg-white rounded-xl p-4 shadow-sm"><p class="text-3xl font-serif text-amber-500">' + pending.length + '</p><p class="text-xs text-stone-500 mt-1">Pending Review</p></div>';
+        
+        if (adminState.media.length === 0) {
+          gridEl.innerHTML = '<p class="font-serif text-2xl text-stone-600">No photos yet</p>';
+        } else {
+          var html = '<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">';
+          adminState.media.forEach(function(item) {
+            var src = API_BASE + '/uploads/' + item.filename;
+            var mediaEl = isVideo(item.mimeType)
+              ? '<video src="' + src + '" class="w-full aspect-square object-cover" muted playsinline></video>'
+              : '<img src="' + src + '" alt="' + (item.caption || 'Photo') + '" class="w-full aspect-square object-cover" loading="lazy" />';
+            
+            html += '<div class="relative group rounded-xl overflow-hidden shadow-sm border-2 ' + (item.approved ? 'border-transparent' : 'border-amber-400') + '">\
+              ' + mediaEl + '\
+              ' + (item.approved ? '' : '<div class="absolute top-2 left-2 bg-amber-400 text-white text-xs px-2 py-0.5 rounded-full">Pending</div>') + '\
+              <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all flex flex-col items-center justify-center gap-2">\
+                <button onclick="toggleApproval(\'' + item.id + '\')" class="p-2 rounded-full ' + (item.approved ? 'bg-amber-500 hover:bg-amber-600' : 'bg-green-500 hover:bg-green-600') + ' text-white" title="' + (item.approved ? 'Unapprove' : 'Approve') + '">' + (item.approved ? '✕' : '✓') + '</button>\
+                <button onclick="deleteMedia(\'' + item.id + '\')" class="p-2 rounded-full bg-red-500 hover:bg-red-600 text-white" title="Delete">🗑</button>\
+              </div>\
+            </div>';
+          });
+          html += '</div>';
+          gridEl.innerHTML = html;
+        }
+      } catch(e) {
+        console.error('Admin refresh error:', e);
+      }
+    }
+
+    async function toggleApproval(id) {
+      try {
+        await fetch(API_BASE + '/api/media/' + id, { method: 'PATCH', headers: { authorization: 'Bearer ' + adminState.password } });
+        refreshAdmin();
+      } catch(e) {}
+    }
+
+    async function deleteMedia(id) {
+      if (!confirm('Delete this photo permanently?')) return;
+      try {
+        await fetch(API_BASE + '/api/media/' + id, { method: 'DELETE', headers: { authorization: 'Bearer ' + adminState.password } });
+        refreshAdmin();
+      } catch(e) {}
+    }
+
+    // ===== Init =====
+    window.addEventListener('hashchange', router);
+    router();
+    
+    // Clean up intervals on page change
+    window.addEventListener('hashchange', function() {
+      if (slideshowState.interval) {
+        clearInterval(slideshowState.interval);
+        slideshowState.interval = null;
+      }
+      if (slideshowState.advanceTimer) {
+        clearInterval(slideshowState.advanceTimer);
+        slideshowState.advanceTimer = null;
+      }
+    });
+  </script>
+</body>
+</html>
