@@ -153,6 +153,32 @@ app.patch("/api/media/:id", async (req, res) => {
   res.json({ success: true, media: record });
 });
 
+// Storage info endpoint
+app.get("/api/storage", async (_req, res) => {
+  try {
+    const records = await readDb();
+    const files = await fs.readdir(UPLOAD_DIR);
+    let totalSize = 0;
+    for (const f of files) {
+      try {
+        const stat = await fs.stat(path.join(UPLOAD_DIR, f));
+        if (stat.isFile()) totalSize += stat.size;
+      } catch {}
+    }
+    const dbSize = (await fs.readFile(DATA_FILE, 'utf-8').catch(() => '')).length;
+    res.json({
+      fileCount: records.length,
+      filesOnDisk: files.length,
+      totalSizeBytes: totalSize,
+      totalSizeMB: Math.round(totalSize / 1024 / 1024 * 100) / 100,
+      dbSizeBytes: dbSize,
+      uploadDir: UPLOAD_DIR,
+    });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to read storage info' });
+  }
+});
+
 // Delete media
 app.delete("/api/media/:id", async (req, res) => {
   const records = await readDb();
