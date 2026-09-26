@@ -1173,22 +1173,27 @@
       // Try to play video with audio; fall back to muted if browser blocks autoplay
       var slideVideo = contentEl.querySelector('video');
       if (slideVideo) {
+        // Add persistent mute/unmute toggle button
+        var muteBtn = document.createElement('button');
+        muteBtn.style.cssText = 'position:absolute;top:16px;right:16px;z-index:30;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.12);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;';
+        muteBtn.innerHTML = '🔊';
+        muteBtn.title = 'Mute';
+        muteBtn.onclick = function(e) {
+          e.stopPropagation();
+          slideVideo.muted = !slideVideo.muted;
+          muteBtn.innerHTML = slideVideo.muted ? '🔇' : '🔊';
+          muteBtn.title = slideVideo.muted ? 'Unmute' : 'Mute';
+        };
+        contentEl.style.position = 'relative';
+        contentEl.appendChild(muteBtn);
+        
+        // Try unmuted autoplay first
         slideVideo.play().catch(function() {
-          // Autoplay with sound blocked — mute and retry, then show unmute button
+          // Browser blocked unmuted autoplay — start muted, update button
           slideVideo.muted = true;
+          muteBtn.innerHTML = '🔇';
+          muteBtn.title = 'Unmute';
           slideVideo.play().catch(function() {});
-          // Add unmute button overlay
-          var unmuteBtn = document.createElement('button');
-          unmuteBtn.style.cssText = 'position:absolute;top:16px;right:16px;z-index:30;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.12);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;';
-          unmuteBtn.innerHTML = '🔇';
-          unmuteBtn.title = 'Tap to unmute';
-          unmuteBtn.onclick = function(e) {
-            e.stopPropagation();
-            slideVideo.muted = false;
-            unmuteBtn.style.display = 'none';
-          };
-          contentEl.style.position = 'relative';
-          contentEl.appendChild(unmuteBtn);
         });
       }
     }
