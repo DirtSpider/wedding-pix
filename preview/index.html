@@ -1156,7 +1156,7 @@
       
       var src = API_BASE + '/uploads/' + current.filename;
       var mediaEl = isVideo(current.mimeType)
-        ? '<video src="' + src + '" class="max-w-full max-h-[85vh] object-contain rounded-lg" autoplay muted loop playsinline></video>'
+        ? '<video src="' + src + '" class="max-w-full max-h-[85vh] object-contain rounded-lg" autoplay loop playsinline></video>'
         : '<img src="' + src + '" alt="' + (current.caption || 'Wedding photo') + '" class="max-w-full max-h-[85vh] object-contain rounded-lg fade-in" />';
       
       var captionHtml = '';
@@ -1170,11 +1170,26 @@
       contentEl.className = 'fade-in w-full h-full flex items-center justify-center p-8';
       contentEl.innerHTML = mediaEl + captionHtml;
       
-      // iOS Safari: set muted via JS (HTML attribute unreliable)
+      // Try to play video with audio; fall back to muted if browser blocks autoplay
       var slideVideo = contentEl.querySelector('video');
       if (slideVideo) {
-        slideVideo.muted = true;
-        slideVideo.play().catch(function() {});
+        slideVideo.play().catch(function() {
+          // Autoplay with sound blocked — mute and retry, then show unmute button
+          slideVideo.muted = true;
+          slideVideo.play().catch(function() {});
+          // Add unmute button overlay
+          var unmuteBtn = document.createElement('button');
+          unmuteBtn.style.cssText = 'position:absolute;top:16px;right:16px;z-index:30;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.12);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;';
+          unmuteBtn.innerHTML = '🔇';
+          unmuteBtn.title = 'Tap to unmute';
+          unmuteBtn.onclick = function(e) {
+            e.stopPropagation();
+            slideVideo.muted = false;
+            unmuteBtn.style.display = 'none';
+          };
+          contentEl.style.position = 'relative';
+          contentEl.appendChild(unmuteBtn);
+        });
       }
     }
 
