@@ -965,15 +965,15 @@
       if (ext && !filename.includes('.')) filename = filename + '.' + ext;
       
       var mediaEl = isVideo(item.mimeType)
-        ? '<video src="' + src + '" controls autoplay playsinline preload="metadata" class="max-w-full max-h-[80vh] object-contain rounded-lg"></video>'
-        : '<img src="' + src + '" alt="' + (item.caption || 'Wedding photo') + '" class="max-w-full max-h-[80vh] object-contain rounded-lg" />';
+        ? '<video src="' + src + '" controls autoplay playsinline preload="metadata" class="max-w-full max-h-[55vh] object-contain rounded-lg"></video>'
+        : '<img src="' + src + '" alt="' + (item.caption || 'Wedding photo') + '" class="max-w-full max-h-[55vh] object-contain rounded-lg" />';
       
       // Remove existing overlay
       var existing = document.getElementById('lightbox-overlay');
       if (existing) document.body.removeChild(existing);
       
       var overlay = document.createElement('div');
-      overlay.className = 'fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-6 pb-24 backdrop';
+      overlay.className = 'fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 backdrop';
       overlay.id = 'lightbox-overlay';
       overlay.onclick = function(e) {
         if (e.target === overlay) closeLightbox();
@@ -983,20 +983,38 @@
       var prevArrow = media.length > 1 ? '<button class="hidden md:flex absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white items-center justify-center transition-all" onclick="navigateLightbox(-1)">‹</button>' : '';
       var nextArrow = media.length > 1 ? '<button class="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white items-center justify-center transition-all" onclick="navigateLightbox(1)">›</button>' : '';
       
-      overlay.innerHTML = '<div class="relative max-w-5xl max-h-[90vh] w-full flex flex-col items-center">' +
+      overlay.innerHTML = '<div class="relative max-w-5xl w-full flex flex-col items-center">' +
         prevArrow +
         nextArrow +
-        '<div class="flex-1 flex items-center justify-center w-full">' + mediaEl + '</div>' +
-        (item.caption ? '<p class="text-white text-center mt-4 font-serif text-lg">' + item.caption + '</p>' : '') +
+        '<div class="flex-1 flex items-center justify-center w-full min-h-0">' + mediaEl + '</div>' +
+        (item.caption ? '<p class="text-white text-center mt-3 font-serif text-lg">' + item.caption + '</p>' : '') +
         (item.guestName ? '<p class="text-white/50 text-sm mt-1">— ' + item.guestName + '</p>' : '') +
         (media.length > 1 ? '<p class="text-white/30 text-xs mt-1">' + (idx + 1) + ' of ' + media.length + '</p>' : '') +
-        '<div class="flex items-center gap-3 mt-4">' +
+        '</div>' +
+        // Fixed button bar at bottom — always visible, clears iOS home bar
+        '<div class="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-center gap-3 p-4 pb-8" id="lightbox-buttons">' +
           '<button class="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 rounded-full border border-white/20 text-sm text-white transition-all" onclick="downloadSingle(\'' + item.id + '\')">' + DOWNLOAD_SVG + ' Download</button>' +
           '<button class="inline-flex items-center gap-2 px-5 py-2.5 bg-red-500 hover:bg-red-600 rounded-full border border-red-600 text-sm text-black font-medium transition-all" onclick="closeLightbox();deleteSingle(\'' + item.id + '\')">' + TRASH_SVG + ' Delete</button>' +
           '<button class="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 rounded-full border border-white/20 text-sm text-white transition-all" onclick="closeLightbox()">✕ Close</button>' +
-        '</div>' +
         '</div>';
       document.body.appendChild(overlay);
+      
+      // Swipe up gesture: show centered button menu
+      var touchStartY = 0;
+      var touchEndY = 0;
+      overlay.addEventListener('touchstart', function(e) {
+        touchStartY = e.changedTouches[0].screenY;
+      }, { passive: true });
+      overlay.addEventListener('touchend', function(e) {
+        touchEndY = e.changedTouches[0].screenY;
+        var swipeDistY = touchEndY - touchStartY;
+        // Swipe up (negative) shows centered menu and hides bottom bar
+        if (swipeDistY < -50) {
+          var bottomBar = document.getElementById('lightbox-buttons');
+          if (bottomBar) bottomBar.style.display = 'none';
+          showCenteredButtons(item);
+        }
+      }, { passive: true });
       
       // iOS Safari: call play() explicitly after user gesture
       var lightboxVideo = overlay.querySelector('video');
@@ -1016,7 +1034,7 @@
         touchEndX = e.changedTouches[0].screenX;
         var swipeDistance = touchEndX - touchStartX;
         // Swipe left (negative) = next, swipe right (positive) = previous
-        if (Math.abs(swipeDistance) > 50) {
+        if (Math.abs(swipeDistance) > 30) {
           if (swipeDistance < 0) {
             navigateLightbox(1);  // Swipe left → next
           } else {
@@ -1037,6 +1055,44 @@
       };
     }
     
+    function showCenteredButtons(item) {
+      // Remove any existing centered menu
+      var existing = document.getElementById('centered-btns');
+      if (existing) existing.remove();
+      
+      var menu = document.createElement('div');
+      menu.id = 'centered-btns';
+      menu.className = 'fixed inset-0 z-[60] flex items-center justify-center bg-black/40 backdrop-blur-sm';
+      menu.onclick = function(e) {
+        if (e.target === menu) {
+          menu.remove();
+          var bottomBar = document.getElementById('lightbox-buttons');
+          if (bottomBar) bottomBar.style.display = '';
+        }
+      };
+      menu.innerHTML = '<div class="flex flex-col items-center gap-3 p-8 bg-black/80 rounded-2xl border border-white/10">' +
+        '<button class="inline-flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 rounded-full border border-white/20 text-sm text-white transition-all" onclick="document.getElementById(\'centered-btns\').remove();var bb=document.getElementById(\'lightbox-buttons\');if(bb)bb.style.display=\'\';downloadSingle(\'' + item.id + '\')">' + DOWNLOAD_SVG + ' Download</button>' +
+        '<button class="inline-flex items-center gap-2 px-6 py-3 bg-red-500 hover:bg-red-600 rounded-full border border-red-600 text-sm text-black font-medium transition-all" onclick="document.getElementById(\'centered-btns\').remove();closeLightbox();deleteSingle(\'' + item.id + '\')">' + TRASH_SVG + ' Delete</button>' +
+        '<button class="inline-flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 rounded-full border border-white/20 text-sm text-white transition-all" onclick="document.getElementById(\'centered-btns\').remove();closeLightbox()">✕ Close</button>' +
+        '<p class="text-white/40 text-xs mt-2">Swipe down or tap outside to dismiss</p>' +
+        '</div>';
+      document.body.appendChild(menu);
+      
+      // Swipe down or tap to dismiss
+      var dismissStartY = 0;
+      menu.addEventListener('touchstart', function(e) {
+        dismissStartY = e.changedTouches[0].screenY;
+      }, { passive: true });
+      menu.addEventListener('touchend', function(e) {
+        var dismissEndY = e.changedTouches[0].screenY;
+        if (dismissEndY - dismissStartY > 50) {
+          menu.remove();
+          var bottomBar = document.getElementById('lightbox-buttons');
+          if (bottomBar) bottomBar.style.display = '';
+        }
+      }, { passive: true });
+    }
+    
     function navigateLightbox(direction) {
       var media = window._lightboxMedia || [];
       if (media.length <= 1) return;
@@ -1049,6 +1105,8 @@
     }
     
     function closeLightbox() {
+      var centered = document.getElementById('centered-btns');
+      if (centered) centered.remove();
       var overlay = document.getElementById('lightbox-overlay');
       if (overlay) document.body.removeChild(overlay);
       document.onkeydown = null;
