@@ -965,8 +965,8 @@
       if (ext && !filename.includes('.')) filename = filename + '.' + ext;
       
       var mediaEl = isVideo(item.mimeType)
-        ? '<video src="' + src + '" controls autoplay playsinline preload="metadata" class="max-w-full max-h-[55vh] object-contain rounded-lg"></video>'
-        : '<img src="' + src + '" alt="' + (item.caption || 'Wedding photo') + '" class="max-w-full max-h-[55vh] object-contain rounded-lg" />';
+        ? '<video src="' + src + '" controls autoplay playsinline preload="metadata" class="max-w-full max-h-[70vh] object-contain rounded-lg"></video>'
+        : '<img src="' + src + '" alt="' + (item.caption || 'Wedding photo') + '" class="max-w-full max-h-[70vh] object-contain rounded-lg" />';
       
       // Remove existing overlay
       var existing = document.getElementById('lightbox-overlay');
@@ -976,7 +976,13 @@
       overlay.className = 'fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 backdrop';
       overlay.id = 'lightbox-overlay';
       overlay.onclick = function(e) {
-        if (e.target === overlay) closeLightbox();
+        // Double-tap anywhere to close; single tap does nothing
+        if (window._lightboxLastTap && Date.now() - window._lightboxLastTap < 350) {
+          window._lightboxLastTap = 0;
+          closeLightbox();
+        } else {
+          window._lightboxLastTap = Date.now();
+        }
       };
       
       // Navigation arrows (hidden on mobile, swipe instead)
@@ -993,28 +999,11 @@
         '</div>' +
         // Fixed button bar at bottom — always visible, clears iOS home bar
         '<div class="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-center gap-3 p-4 pb-8" id="lightbox-buttons">' +
-          '<button class="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 rounded-full border border-white/20 text-sm text-white transition-all" onclick="downloadSingle(\'' + item.id + '\')">' + DOWNLOAD_SVG + ' Download</button>' +
+          '<button class="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 rounded-full border border-white/20 text-sm text-white font-medium transition-all" style="text-shadow: -1px -1px 0 #5C6B3D, 1px -1px 0 #5C6B3D, -1px 1px 0 #5C6B3D, 1px 1px 0 #5C6B3D, 0 0 3px #5C6B3D;" onclick="downloadSingle(\'' + item.id + '\')">' + DOWNLOAD_SVG + ' Download</button>' +
           '<button class="inline-flex items-center gap-2 px-5 py-2.5 bg-red-500 hover:bg-red-600 rounded-full border border-red-600 text-sm text-black font-medium transition-all" onclick="closeLightbox();deleteSingle(\'' + item.id + '\')">' + TRASH_SVG + ' Delete</button>' +
-          '<button class="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 rounded-full border border-white/20 text-sm text-white transition-all" onclick="closeLightbox()">✕ Close</button>' +
+          '<button class="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 rounded-full border border-white/20 text-sm text-white font-medium transition-all" style="text-shadow: -1px -1px 0 #5C6B3D, 1px -1px 0 #5C6B3D, -1px 1px 0 #5C6B3D, 1px 1px 0 #5C6B3D, 0 0 3px #5C6B3D;" onclick="closeLightbox()">✕ Close</button>' +
         '</div>';
       document.body.appendChild(overlay);
-      
-      // Swipe up gesture: show centered button menu
-      var touchStartY = 0;
-      var touchEndY = 0;
-      overlay.addEventListener('touchstart', function(e) {
-        touchStartY = e.changedTouches[0].screenY;
-      }, { passive: true });
-      overlay.addEventListener('touchend', function(e) {
-        touchEndY = e.changedTouches[0].screenY;
-        var swipeDistY = touchEndY - touchStartY;
-        // Swipe up (negative) shows centered menu and hides bottom bar
-        if (swipeDistY < -50) {
-          var bottomBar = document.getElementById('lightbox-buttons');
-          if (bottomBar) bottomBar.style.display = 'none';
-          showCenteredButtons(item);
-        }
-      }, { passive: true });
       
       // iOS Safari: call play() explicitly after user gesture
       var lightboxVideo = overlay.querySelector('video');
@@ -1055,44 +1044,6 @@
       };
     }
     
-    function showCenteredButtons(item) {
-      // Remove any existing centered menu
-      var existing = document.getElementById('centered-btns');
-      if (existing) existing.remove();
-      
-      var menu = document.createElement('div');
-      menu.id = 'centered-btns';
-      menu.className = 'fixed inset-0 z-[60] flex items-center justify-center bg-black/40 backdrop-blur-sm';
-      menu.onclick = function(e) {
-        if (e.target === menu) {
-          menu.remove();
-          var bottomBar = document.getElementById('lightbox-buttons');
-          if (bottomBar) bottomBar.style.display = '';
-        }
-      };
-      menu.innerHTML = '<div class="flex flex-col items-center gap-3 p-8 bg-black/80 rounded-2xl border border-white/10">' +
-        '<button class="inline-flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 rounded-full border border-white/20 text-sm text-white transition-all" onclick="document.getElementById(\'centered-btns\').remove();var bb=document.getElementById(\'lightbox-buttons\');if(bb)bb.style.display=\'\';downloadSingle(\'' + item.id + '\')">' + DOWNLOAD_SVG + ' Download</button>' +
-        '<button class="inline-flex items-center gap-2 px-6 py-3 bg-red-500 hover:bg-red-600 rounded-full border border-red-600 text-sm text-black font-medium transition-all" onclick="document.getElementById(\'centered-btns\').remove();closeLightbox();deleteSingle(\'' + item.id + '\')">' + TRASH_SVG + ' Delete</button>' +
-        '<button class="inline-flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 rounded-full border border-white/20 text-sm text-white transition-all" onclick="document.getElementById(\'centered-btns\').remove();closeLightbox()">✕ Close</button>' +
-        '<p class="text-white/40 text-xs mt-2">Swipe down or tap outside to dismiss</p>' +
-        '</div>';
-      document.body.appendChild(menu);
-      
-      // Swipe down or tap to dismiss
-      var dismissStartY = 0;
-      menu.addEventListener('touchstart', function(e) {
-        dismissStartY = e.changedTouches[0].screenY;
-      }, { passive: true });
-      menu.addEventListener('touchend', function(e) {
-        var dismissEndY = e.changedTouches[0].screenY;
-        if (dismissEndY - dismissStartY > 50) {
-          menu.remove();
-          var bottomBar = document.getElementById('lightbox-buttons');
-          if (bottomBar) bottomBar.style.display = '';
-        }
-      }, { passive: true });
-    }
-    
     function navigateLightbox(direction) {
       var media = window._lightboxMedia || [];
       if (media.length <= 1) return;
@@ -1105,11 +1056,10 @@
     }
     
     function closeLightbox() {
-      var centered = document.getElementById('centered-btns');
-      if (centered) centered.remove();
       var overlay = document.getElementById('lightbox-overlay');
       if (overlay) document.body.removeChild(overlay);
       document.onkeydown = null;
+      window._lightboxLastTap = 0;
     }
 
     // ===== Slideshow Page =====
