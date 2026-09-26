@@ -607,7 +607,7 @@
               : '<img src="' + src + '" alt="' + (item.caption || item.guestName || 'Wedding photo') + '" class="w-full h-auto object-cover" loading="lazy" decoding="async" />';
             
             var selectCheckbox = galleryState.selectMode
-              ? '<div id="select-cb-' + item.id + '" class="absolute top-1 left-1 z-20 w-10 h-10 rounded-full border-4 ' + (galleryState.selected[item.id] ? 'bg-rose-500 border-rose-500 text-white' : 'bg-white border-white text-transparent') + ' flex items-center justify-center cursor-pointer transition-all" style="box-shadow: 0 0 0 3px #5C6B3D, 0 0 8px #5C6B3D;" onclick="event.stopPropagation();toggleSelect(\'' + item.id + '\')">' + (galleryState.selected[item.id] ? CHECK_SVG : '') + '</div>'
+              ? '<div id="select-cb-' + item.id + '" style="position:absolute;top:4px;left:4px;z-index:20;width:40px;height:40px;border-radius:50%;border:4px solid ' + (galleryState.selected[item.id] ? '#722F37' : '#fff') + ';background:' + (galleryState.selected[item.id] ? '#722F37' : 'rgba(255,255,255,0.95)') + ';color:' + (galleryState.selected[item.id] ? '#fff' : 'transparent') + ';display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;box-shadow:0 0 0 3px #5C6B3D,0 0 8px #5C6B3D;" onclick="event.stopPropagation();toggleSelect(\'' + item.id + '\')">' + (galleryState.selected[item.id] ? CHECK_SVG : '') + '</div>'
               : '';
             
             var downloadBtn = '';
@@ -689,12 +689,10 @@
       var cb = document.getElementById('select-cb-' + id);
       if (cb) {
         if (galleryState.selected[id]) {
-          cb.className = 'absolute top-1 left-1 z-20 w-10 h-10 rounded-full border-4 bg-rose-500 border-rose-500 text-white flex items-center justify-center cursor-pointer transition-all';
-          cb.style.boxShadow = '0 0 0 3px #5C6B3D, 0 0 8px #5C6B3D';
+          cb.style.cssText = 'position:absolute;top:4px;left:4px;z-index:20;width:40px;height:40px;border-radius:50%;border:4px solid #722F37;background:#722F37;color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;box-shadow:0 0 0 3px #5C6B3D,0 0 8px #5C6B3D;';
           cb.innerHTML = CHECK_SVG;
         } else {
-          cb.className = 'absolute top-1 left-1 z-20 w-10 h-10 rounded-full border-4 bg-white border-white text-transparent flex items-center justify-center cursor-pointer transition-all';
-          cb.style.boxShadow = '0 0 0 3px #5C6B3D, 0 0 8px #5C6B3D';
+          cb.style.cssText = 'position:absolute;top:4px;left:4px;z-index:20;width:40px;height:40px;border-radius:50%;border:4px solid #fff;background:rgba(255,255,255,0.95);color:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;box-shadow:0 0 0 3px #5C6B3D,0 0 8px #5C6B3D;';
           cb.innerHTML = '';
         }
       }
@@ -715,7 +713,7 @@
           : '<img src="' + src + '" alt="' + (item.caption || item.guestName || 'Wedding photo') + '" class="w-full h-auto object-cover" loading="lazy" decoding="async" />';
         
         var selectCheckbox = galleryState.selectMode
-          ? '<div id="select-cb-' + item.id + '" class="absolute top-1 left-1 z-20 w-10 h-10 rounded-full border-4 ' + (galleryState.selected[item.id] ? 'bg-rose-500 border-rose-500 text-white' : 'bg-white border-white text-transparent') + ' flex items-center justify-center cursor-pointer transition-all" style="box-shadow: 0 0 0 3px #5C6B3D, 0 0 8px #5C6B3D;" onclick="event.stopPropagation();toggleSelect(\'' + item.id + '\')">' + (galleryState.selected[item.id] ? CHECK_SVG : '') + '</div>'
+          ? '<div id="select-cb-' + item.id + '" style="position:absolute;top:4px;left:4px;z-index:20;width:40px;height:40px;border-radius:50%;border:4px solid ' + (galleryState.selected[item.id] ? '#722F37' : '#fff') + ';background:' + (galleryState.selected[item.id] ? '#722F37' : 'rgba(255,255,255,0.95)') + ';color:' + (galleryState.selected[item.id] ? '#fff' : 'transparent') + ';display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;box-shadow:0 0 0 3px #5C6B3D,0 0 8px #5C6B3D;" onclick="event.stopPropagation();toggleSelect(\'' + item.id + '\')">' + (galleryState.selected[item.id] ? CHECK_SVG : '') + '</div>'
           : '';
         
         var downloadBtn = '';
