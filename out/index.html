@@ -965,8 +965,8 @@
       if (ext && !filename.includes('.')) filename = filename + '.' + ext;
       
       var mediaEl = isVideo(item.mimeType)
-        ? '<video src="' + src + '" controls autoplay playsinline preload="metadata" class="max-w-full max-h-[70vh] object-contain rounded-lg"></video>'
-        : '<img src="' + src + '" alt="' + (item.caption || 'Wedding photo') + '" class="max-w-full max-h-[70vh] object-contain rounded-lg" />';
+        ? '<video src="' + src + '" controls autoplay playsinline preload="metadata" class="max-w-full max-h-[85vh] object-contain rounded-lg"></video>'
+        : '<img src="' + src + '" alt="' + (item.caption || 'Wedding photo') + '" class="max-w-full max-h-[85vh] object-contain rounded-lg" />';
       
       // Remove existing overlay
       var existing = document.getElementById('lightbox-overlay');
