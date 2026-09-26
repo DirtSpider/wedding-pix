@@ -973,7 +973,7 @@
       if (existing) document.body.removeChild(existing);
       
       var overlay = document.createElement('div');
-      overlay.className = 'fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-6 backdrop';
+      overlay.className = 'fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-6 pb-24 backdrop';
       overlay.id = 'lightbox-overlay';
       overlay.onclick = function(e) {
         if (e.target === overlay) closeLightbox();
@@ -990,7 +990,7 @@
         (item.caption ? '<p class="text-white text-center mt-4 font-serif text-lg">' + item.caption + '</p>' : '') +
         (item.guestName ? '<p class="text-white/50 text-sm mt-1">— ' + item.guestName + '</p>' : '') +
         (media.length > 1 ? '<p class="text-white/30 text-xs mt-1">' + (idx + 1) + ' of ' + media.length + '</p>' : '') +
-        '<div class="flex items-center gap-3 mt-4 mb-6">' +
+        '<div class="flex items-center gap-3 mt-4">' +
           '<button class="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 rounded-full border border-white/20 text-sm text-white transition-all" onclick="downloadSingle(\'' + item.id + '\')">' + DOWNLOAD_SVG + ' Download</button>' +
           '<button class="inline-flex items-center gap-2 px-5 py-2.5 bg-red-500 hover:bg-red-600 rounded-full border border-red-600 text-sm text-black font-medium transition-all" onclick="closeLightbox();deleteSingle(\'' + item.id + '\')">' + TRASH_SVG + ' Delete</button>' +
           '<button class="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 rounded-full border border-white/20 text-sm text-white transition-all" onclick="closeLightbox()">✕ Close</button>' +
