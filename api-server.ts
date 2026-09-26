@@ -90,7 +90,14 @@ app.use("/uploads", express.static(UPLOAD_DIR));
 
 // Serve static frontend (vanilla JS version)
 const STATIC_DIR = path.join(process.cwd(), "out");
-app.use(express.static(STATIC_DIR));
+app.use(express.static(STATIC_DIR, {
+  setHeaders: (res, filePath) => {
+    // Prevent caching of HTML files so redeployments show immediately
+    if (filePath.endsWith(".html")) {
+      res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    }
+  },
+}));
 
 // Upload endpoint
 app.post("/api/upload", upload.single("file"), async (req, res) => {
