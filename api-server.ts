@@ -20,6 +20,7 @@ type MediaRecord = {
   mimeType: string;
   uploadedAt: string;
   approved: boolean;
+  size?: number;
 };
 
 async function ensureDirs() {
@@ -105,6 +106,7 @@ app.post("/api/upload", upload.single("file"), async (req, res) => {
       mimeType: req.file.mimetype,
       uploadedAt: new Date().toISOString(),
       approved: true,
+      size: req.file.size,
     };
 
     const records = await readDb();
@@ -122,6 +124,18 @@ app.post("/api/upload", upload.single("file"), async (req, res) => {
 app.get("/api/upload", async (req, res) => {
   const admin = req.query.admin === "true";
   const records = await readDb();
+  // Enrich with file size if missing
+  let needsSave = false;
+  for (const r of records) {
+    if (!r.size) {
+      try {
+        const stat = await fs.stat(path.join(UPLOAD_DIR, r.filename));
+        r.size = stat.size;
+        needsSave = true;
+      } catch {}
+    }
+  }
+  if (needsSave) await writeDb(records);
   const filtered = admin ? records : records.filter((r) => r.approved);
   const sorted = filtered.sort((a, b) => b.uploadedAt.localeCompare(a.uploadedAt));
   res.json({ media: sorted });

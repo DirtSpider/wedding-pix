@@ -598,7 +598,7 @@
           media.forEach(function(item) {
             var src = API_BASE + '/uploads/' + item.filename;
             var mediaEl = isVideo(item.mimeType) 
-              ? '<div class="relative w-full" style="aspect-ratio:1;"><video src="' + src + '" class="absolute inset-0 w-full h-full object-cover" muted playsinline></video><div class="absolute inset-0 flex items-center justify-center bg-black/30"><svg width="40" height="40" viewBox="0 0 24 24" fill="white" opacity="0.9"><circle cx="12" cy="12" r="11" fill="black" fill-opacity="0.4"/><polygon points="9 8 17 12 9 16 9 8"/></svg></div></div>'
+              ? '<div class="relative w-full" style="aspect-ratio:1;"><video src="' + src + '" class="absolute inset-0 w-full h-full object-cover" muted playsinline preload="metadata"></video><div class="absolute inset-0 flex items-center justify-center bg-black/30"><svg width="40" height="40" viewBox="0 0 24 24" fill="white" opacity="0.9"><circle cx="12" cy="12" r="11" fill="black" fill-opacity="0.4"/><polygon points="9 8 17 12 9 16 9 8"/></svg></div></div>'
               : '<img src="' + src + '" alt="' + (item.caption || item.guestName || 'Wedding photo') + '" class="w-full h-auto object-cover" loading="lazy" decoding="async" />';
             
             var selectCheckbox = galleryState.selectMode
@@ -702,11 +702,11 @@
       
       if (media.length === 0) return;
       
-      var html = '<div class="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">';
+      var html = '<div class="columns-3 md:columns-4 lg:columns-5 gap-3 space-y-3">';
       media.forEach(function(item) {
         var src = API_BASE + '/uploads/' + item.filename;
         var mediaEl = isVideo(item.mimeType) 
-          ? '<div class="relative w-full" style="aspect-ratio:1;"><video src="' + src + '" class="absolute inset-0 w-full h-full object-cover" muted playsinline></video><div class="absolute inset-0 flex items-center justify-center bg-black/30"><svg width="40" height="40" viewBox="0 0 24 24" fill="white" opacity="0.9"><circle cx="12" cy="12" r="11" fill="black" fill-opacity="0.4"/><polygon points="9 8 17 12 9 16 9 8"/></svg></div></div>'
+          ? '<div class="relative w-full" style="aspect-ratio:1;"><video src="' + src + '" class="absolute inset-0 w-full h-full object-cover" muted playsinline preload="metadata"></video><div class="absolute inset-0 flex items-center justify-center bg-black/30"><svg width="40" height="40" viewBox="0 0 24 24" fill="white" opacity="0.9"><circle cx="12" cy="12" r="11" fill="black" fill-opacity="0.4"/><polygon points="9 8 17 12 9 16 9 8"/></svg></div></div>'
           : '<img src="' + src + '" alt="' + (item.caption || item.guestName || 'Wedding photo') + '" class="w-full h-auto object-cover" loading="lazy" decoding="async" />';
         
         var selectCheckbox = galleryState.selectMode
@@ -741,7 +741,23 @@
       var btn = document.getElementById('download-selected-btn');
       var text = document.getElementById('download-selected-text');
       if (btn && text) {
-        text.textContent = count > 0 ? 'Download Selected (' + count + ')' : 'Download Selected';
+        var label = 'Download Selected';
+        if (count > 0) {
+          label = 'Download Selected (' + count + ')';
+          // Show total size after 2nd item selected
+          if (count >= 2) {
+            var totalBytes = 0;
+            var media = galleryState.media;
+            for (var i = 0; i < media.length; i++) {
+              if (galleryState.selected[media[i].id] && media[i].size) {
+                totalBytes += media[i].size;
+              }
+            }
+            var totalMB = Math.round(totalBytes / 1024 / 1024 * 100) / 100;
+            label += ' · ' + totalMB + ' MB';
+          }
+        }
+        text.textContent = label;
         if (count > 0) {
           btn.classList.remove('opacity-60', 'pointer-events-none');
         } else {
@@ -771,6 +787,15 @@
       var ext = item.mimeType && item.mimeType.split('/')[1];
       if (ext && !filename.includes('.')) filename = filename + '.' + ext;
       
+      // Show loading state on the download button in lightbox
+      var dlBtn = document.querySelector('#lightbox-buttons button');
+      var originalHTML = '';
+      if (dlBtn && dlBtn.textContent.includes('Download')) {
+        originalHTML = dlBtn.innerHTML;
+        dlBtn.innerHTML = '<div class="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin"></div> <span>Downloading...</span>';
+        dlBtn.style.pointerEvents = 'none';
+      }
+      
       try {
         var res = await fetch(src);
         var blob = await res.blob();
@@ -785,6 +810,11 @@
       } catch(e) {
         // Fallback: open in new tab
         window.open(src, '_blank');
+      } finally {
+        if (dlBtn && originalHTML) {
+          dlBtn.innerHTML = originalHTML;
+          dlBtn.style.pointerEvents = 'auto';
+        }
       }
     }
 
@@ -976,6 +1006,8 @@
       overlay.className = 'fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 backdrop';
       overlay.id = 'lightbox-overlay';
       overlay.onclick = function(e) {
+        // Skip double-tap detection when clicking on video controls
+        if (e.target && (e.target.tagName === 'VIDEO' || e.target.closest('video'))) return;
         // Double-tap anywhere to close; single tap does nothing
         if (window._lightboxLastTap && Date.now() - window._lightboxLastTap < 350) {
           window._lightboxLastTap = 0;
@@ -1133,6 +1165,13 @@
       
       contentEl.className = 'fade-in w-full h-full flex items-center justify-center p-8';
       contentEl.innerHTML = mediaEl + captionHtml;
+      
+      // iOS Safari: set muted via JS (HTML attribute unreliable)
+      var slideVideo = contentEl.querySelector('video');
+      if (slideVideo) {
+        slideVideo.muted = true;
+        slideVideo.play().catch(function() {});
+      }
     }
 
     // ===== Admin Page =====
