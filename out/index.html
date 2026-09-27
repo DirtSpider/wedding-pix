@@ -603,7 +603,7 @@
           media.forEach(function(item) {
             var src = API_BASE + '/uploads/' + item.filename;
             var mediaEl = isVideo(item.mimeType) 
-              ? '<div class="relative w-full" style="aspect-ratio:1;"><video src="' + src + '" class="absolute inset-0 w-full h-full object-cover" muted playsinline preload="metadata"></video><div class="absolute inset-0 flex items-center justify-center bg-black/30"><svg width="40" height="40" viewBox="0 0 24 24" fill="white" opacity="0.9"><circle cx="12" cy="12" r="11" fill="black" fill-opacity="0.4"/><polygon points="9 8 17 12 9 16 9 8"/></svg></div></div>'
+              ? '<div class="relative w-full" style="aspect-ratio:1;"><video src="' + src + '#t=0.1" class="absolute inset-0 w-full h-full object-cover" muted playsinline preload="metadata"></video><div class="absolute inset-0 flex items-center justify-center bg-black/30"><svg width="40" height="40" viewBox="0 0 24 24" fill="white" opacity="0.9"><circle cx="12" cy="12" r="11" fill="black" fill-opacity="0.4"/><polygon points="9 8 17 12 9 16 9 8"/></svg></div></div>'
               : '<img src="' + src + '" alt="' + (item.caption || item.guestName || 'Wedding photo') + '" class="w-full h-auto object-cover" loading="lazy" decoding="async" />';
             
             var selectCheckbox = galleryState.selectMode
@@ -630,6 +630,10 @@
           });
           html += '</div>';
           contentEl.innerHTML = html;
+          
+          // iOS: set muted via JS (HTML attribute unreliable)
+          var thumbVideos = contentEl.querySelectorAll('video');
+          thumbVideos.forEach(function(v) { v.muted = true; });
           
           window._galleryMedia = media;
           galleryState.media = media;
@@ -709,7 +713,7 @@
       media.forEach(function(item) {
         var src = API_BASE + '/uploads/' + item.filename;
         var mediaEl = isVideo(item.mimeType) 
-          ? '<div class="relative w-full" style="aspect-ratio:1;"><video src="' + src + '" class="absolute inset-0 w-full h-full object-cover" muted playsinline preload="metadata"></video><div class="absolute inset-0 flex items-center justify-center bg-black/30"><svg width="40" height="40" viewBox="0 0 24 24" fill="white" opacity="0.9"><circle cx="12" cy="12" r="11" fill="black" fill-opacity="0.4"/><polygon points="9 8 17 12 9 16 9 8"/></svg></div></div>'
+          ? '<div class="relative w-full" style="aspect-ratio:1;"><video src="' + src + '#t=0.1" class="absolute inset-0 w-full h-full object-cover" muted playsinline preload="metadata"></video><div class="absolute inset-0 flex items-center justify-center bg-black/30"><svg width="40" height="40" viewBox="0 0 24 24" fill="white" opacity="0.9"><circle cx="12" cy="12" r="11" fill="black" fill-opacity="0.4"/><polygon points="9 8 17 12 9 16 9 8"/></svg></div></div>'
           : '<img src="' + src + '" alt="' + (item.caption || item.guestName || 'Wedding photo') + '" class="w-full h-auto object-cover" loading="lazy" decoding="async" />';
         
         var selectCheckbox = galleryState.selectMode
@@ -736,6 +740,9 @@
       });
       html += '</div>';
       contentEl.innerHTML = html;
+      // iOS: set muted via JS (HTML attribute unreliable)
+      var thumbVideos2 = contentEl.querySelectorAll('video');
+      thumbVideos2.forEach(function(v) { v.muted = true; });
       window._galleryMedia = media;
     }
 
